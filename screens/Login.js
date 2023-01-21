@@ -10,8 +10,8 @@ export default function Login (){
 
     return (
         <SafeAreaView style={{display: 'flex', justifyContent: 'center', width: '100%', height: '100%', paddingHorizontal: 30}}>
-            <Image source={require('../assets/logo.jpeg')} style={{width: 200, height: 200, top: 0, alignSelf: 'center', marginBottom: 70, marginTop: -70}} />
-            <Input placeholder='Phone Number' label='Enter Your Phone Number' accessoryLeft={()=>{return (<Text style={{color: '#666'}}> +91 </Text>)}} keyboardType='numeric' value={phone} onChangeText={setphone} style={{marginBottom: 20}} />
+            <Image source={require('../assets/logo.jpeg')} style={{width: 200, height: 200, top: 0, alignSelf: 'center', marginBottom: 75, marginTop: -75}} />
+            <Input placeholder='Phone Number' label='Enter Your Phone Number' accessoryLeft={()=>{return (<Text style={{color: '#666'}}> +91 </Text>)}} keyboardType='numeric' value={phone} onChangeText={setphone} style={{marginBottom: 30}} />
             <Button>GET OTP</Button>
         </SafeAreaView>
     )
