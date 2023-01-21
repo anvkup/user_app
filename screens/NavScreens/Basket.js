@@ -1,7 +1,10 @@
 import { Text } from "@ui-kitten/components";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Basket({navigator}){
     return(
-        <Text>Basket</Text>
+        <SafeAreaView>
+            <Text>Basket</Text>
+        </SafeAreaView>
     )
 }

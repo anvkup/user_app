@@ -1,7 +1,10 @@
 import { Text } from "@ui-kitten/components";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home({navigator}){
     return(
-        <Text>Home</Text>
+        <SafeAreaView>
+            <Text>Home</Text>
+        </SafeAreaView>
     )
 }
