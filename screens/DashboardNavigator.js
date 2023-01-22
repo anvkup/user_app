@@ -16,11 +16,11 @@ export default function DashboardNavigator(){
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: false, headerTitle: "Surf Vegies"}} />
-                <Stack.Screen name="Orders" component={Orders} options={{headerTitle: "Surf Vegies"}} />
-                <Stack.Screen name="Notifications" component={Notifications} options={{headerTitle: "Surf Vegies"}} />
-                <Stack.Screen name="Settings" component={Settings} options={{headerTitle: "Surf Vegies"}} />
-                <Stack.Screen name="CustomerSupport" component={CustomerSupport} options={{headerTitle: "Surf Vegies"}} />
-                <Stack.Screen name="FAQ" component={FAQ} options={{headerTitle: "Surf Vegies"}} />
+                <Stack.Screen name="Orders" component={Orders} options={{headerTitle: "Orders"}} />
+                <Stack.Screen name="Notifications" component={Notifications} options={{headerTitle: "Notifications"}} />
+                <Stack.Screen name="Settings" component={Settings} options={{headerTitle: "Settings"}} />
+                <Stack.Screen name="CustomerSupport" component={CustomerSupport} options={{headerTitle: "Customer Support"}} />
+                <Stack.Screen name="FAQ" component={FAQ} options={{headerTitle: "FAQ"}} />
             </Stack.Navigator>
         </NavigationContainer>
     )

@@ -7,14 +7,13 @@ export default function Profile({navigation, route}){
     return(
         <SafeAreaView style={{height: '100%', width: '100%'}}>
             <View style={{display: 'flex', maxWidth: '100%', flexDirection: 'column', alignItems: 'center', paddingHorizontal: 10, alignItems: 'center'}}>
-                <Ionicons name="person-sharp" style={{color: '#000',fontSize: 60, borderRadius: 50, marginHorizontal: 8}} />
+                <Ionicons name="person-sharp" style={{color: '#000',fontSize: 60, borderRadius: 50, marginHorizontal: 8, marginBottom: 8}} />
                 {/* <View style={{textAlign: 'center', flexGrow: 1, paddingHorizontal: 10, right: 0, flexWrap: 'wrap'}}> */}
                     <Text style={{fontWeight: '800', fontSize: 19}}>Alicia Lorraine</Text>
                     <Text style={{fontWeight: '700', fontSize: 13}}>+91 8373958820</Text>
                     <Text style={{fontWeight: '600', fontSize: 14}}>23-A, Tower F,</Text> 
                     <Text style={{fontWeight: '600', fontSize: 14}}>Toluene Housing Society, Noida</Text>
                 {/* </View> */}
-                <FontAwesome5 name="user-edit" style={{fontSize: 20, position: 'absolute', top: 3, right: 13, color: '#444'}} />
             </View>
             <ScrollView style={{position: 'absolute', bottom: '15%', width: '100%'}}>
                 <Text style={styles.profileOptions} onPress={()=>{navigation.navigate('Orders')}}>Orders</Text>

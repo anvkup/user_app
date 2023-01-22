@@ -1,12 +1,25 @@
 import { Button, Card, Text } from "@ui-kitten/components";
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ImageSlider } from "react-native-image-slider-banner";
 import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { Entypo, Ionicons } from "@expo/vector-icons";
+import axios from "axios";
+import Counter from "./components/Counter";
 
 export default function Home({navigator}){
+
+    const [itemsSelected, setitemsSelected] = useState({'1': 'he'})
+    axios({baseURL: 'http://localhost:8000'})
+
+    async function a(){
+        const response = await axios.get('http://localhost:8000/', {method: 'get'})
+        console.log(response);
+    }
+    a()
+
     return(
-        <SafeAreaView>
+        // <SafeAreaView>
             <ScrollView>
             <ImageSlider caroselImageContainerStyle={{marginTop: -50}} data={[
                 {img: require('/home/tom/Desktop/Projects/user_app-1/assets/fresh.webp')},
@@ -16,11 +29,12 @@ export default function Home({navigator}){
             <Text style={{marginTop: -30, marginLeft: 16, fontWeight: '800', fontSize: 16}}>Freshly Arrived Vegies</Text>
             <View style={styles.twoCardView}>
                 <Card style={styles.card} status="primary">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/cauliflower.png')} style={styles.cardImage} />
+                    <Image source={{uri: 'https://pngimg.com/d/cauliflower_PNG12673.png'}} style={styles.cardImage} />
                     <Text style={styles.cardText}>Cauliflower</Text>
                     <Text style={styles.cardPrice}>$ 40 per/kg</Text>
                     <Text status="primary" style={styles.inStock}>In Stock</Text>
-                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#00bb00'}} />)}} >Add to Cart</Button>
+                    {/* <Button appearance="outline" style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#00bb00'}} />)}} >Add to Cart</Button> */}
+                    <Counter qty={1} />
                 </Card>
                 <Card style={styles.card} status="primary">
                     <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/carrot.png')} style={styles.cardImage} />
@@ -88,7 +102,7 @@ export default function Home({navigator}){
                 </Card>
             </View>
             </ScrollView>
-        </SafeAreaView>
+        // </SafeAreaView>
     )
 }
 
@@ -122,7 +136,8 @@ const styles = StyleSheet.create({
     },
     inStock:{
         fontSize: 12,
-        marginTop: 8
+        marginTop: 8,
+        fontWeight: '700'
     },
     addBtn:{
         backgroundColor: '#FFF',
