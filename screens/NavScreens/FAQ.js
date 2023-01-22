@@ -1,7 +1,7 @@
 import { Text } from "@ui-kitten/components";
 
-export default function Settings(){
+export default function FAQ() {
     return(
-        <Text>Settings</Text>
+        <Text>FAQ</Text>
     )
 }
