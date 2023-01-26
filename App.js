@@ -5,8 +5,10 @@ import * as eva from '@eva-design/eva';
 import {default as theme} from './theme.json'
 import Login from './screens/Login';
 import DashboardNavigator from './screens/DashboardNavigator';
+import axios from 'axios';
 
 export default function App() {
+
   return (
     <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
       {/* <Login /> */}

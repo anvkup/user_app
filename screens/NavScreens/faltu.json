@@ -1,0 +1,161 @@
+[
+    [
+        {
+            "_id": "63cdb1cf608d4433b1e02a3c",
+            "itemId": 1,
+            "price": 40,
+            "quantity": 40
+        },
+        {
+            "_id": "63cdb1cf608d4433b1e02a3d",
+            "itemId": 2,
+            "price": 20,
+            "quantity": 80
+        }
+    ],
+    [
+        {
+            "_id": "63cdb1cf608d4433b1e02a3e",
+            "itemId": 3,
+            "price": 30,
+            "quantity": 50
+        },
+        {
+            "_id": "63cdb1cf608d4433b1e02a3f",
+            "itemId": 4,
+            "price": 60,
+            "quantity": 9
+        }
+    ],
+    [
+        {
+            "_id": "63cdb1cf608d4433b1e02a40",
+            "itemId": 5,
+            "price": 50,
+            "quantity": 7
+        },
+        {
+            "_id": "63cdb1cf608d4433b1e02a41",
+            "itemId": 6,
+            "price": 8,
+            "quantity": 0
+        }
+    ],
+    [
+        {
+            "_id": "63cdb1cf608d4433b1e02a42",
+            "itemId": 7,
+            "price": 70,
+            "quantity": 0
+        },
+        {
+            "_id": "63d00e39b9390956b9efc55f",
+            "itemId": 8,
+            "price": 40,
+            "quantity": 14
+        }
+    ]
+]
+
+
+<View style={styles.twoCardView}>
+                <Card style={styles.card} status="primary">
+                    <Image source={{ uri: 'https://pngimg.com/d/cauliflower_PNG12673.png' }} style={styles.cardImage} />
+                    <Text style={styles.cardText}>Cauliflower</Text>
+                    <Text style={styles.cardPrice}>$ 40 per/kg</Text>
+                    <Text status="primary" style={styles.inStock}>In Stock</Text>
+                    {/* <Button appearance="outline" style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#00bb00'}} />)}} >Add to Cart</Button> */}
+                    <Counter qty={1} />
+                </Card>
+                <Card style={styles.card} status="primary">
+                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/carrot.png')} style={styles.cardImage} />
+                    <Text style={styles.cardText}>Carrot</Text>
+                    <Text style={styles.cardPrice}>$ 20 per/kg</Text>
+                    <Text status="primary" style={styles.inStock}>In Stock</Text>
+                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: '#00bb00' }} />) }} >Add to Cart</Button>
+                </Card>
+            </View>
+            <View style={styles.twoCardView}>
+                <Card style={styles.card} status="primary">
+                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png')} style={styles.cardImage} />
+                    <Text style={styles.cardText}>Tomato</Text>
+                    <Text style={styles.cardPrice}>$ 60 per/kg</Text>
+                    <Text status="primary" style={styles.inStock}>In Stock</Text>
+                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: '#00bb00' }} />) }} >Add to Cart</Button>
+                </Card>
+                <Card style={styles.card} status="primary">
+                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/cabbage.png')} style={styles.cardImage} />
+                    <Text style={styles.cardText}>Cabbage</Text>
+                    <Text style={styles.cardPrice}>$ 30 per/kg</Text>
+                    <Text status="primary" style={styles.inStock}>In Stock</Text>
+                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: '#00bb00' }} />) }} >Add to Cart</Button>
+                </Card>
+            </View>
+            <View style={styles.twoCardView}>
+                <Card style={styles.card} status="warning">
+                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/broccoli.png')} style={styles.cardImage} />
+                    <Text style={styles.cardText}>Broccoli</Text>
+                    <Text style={styles.cardPrice}>$ 60 per/kg</Text>
+                    <Text status="warning" style={styles.inStock}>Few left Stock</Text>
+                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: '#00bb00' }} />) }} >Add to Cart</Button>
+                </Card>
+                <Card style={styles.card} status="warning">
+                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/capsicum.png')} style={styles.cardImage} />
+                    <Text style={styles.cardText}>Capsicum</Text>
+                    <Text style={styles.cardPrice}>$ 50 per/kg</Text>
+                    <Text status="warning" style={styles.inStock}>Few left in Stock</Text>
+                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: '#00bb00' }} />) }} >Add to Cart</Button>
+                </Card>
+            </View>
+            <View style={styles.twoCardView}>
+                <Card style={styles.card} status="warning">
+                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/potato.png')} style={styles.cardImage} />
+                    <Text style={styles.cardText}>Potato</Text>
+                    <Text style={styles.cardPrice}>$ 8 per/kg</Text>
+                    <Text status="warning" style={styles.inStock}>Few left in Stock</Text>
+                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: '#00bb00' }} />) }} >Add to Cart</Button>
+                </Card>
+                <Card style={styles.card} status="danger">
+                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/banana.png')} style={styles.cardImage} />
+                    <Text style={styles.cardText}>Banana</Text>
+                    <Text style={styles.cardPrice}>$ 70 per/kg</Text>
+                    <Text status="danger" style={styles.inStock}>Out of Stock</Text>
+                    <Button appearance="outline" disabled={true} style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: '#bbb' }} />) }} >Add to Cart</Button>
+                </Card>
+            </View>
+            <View style={styles.twoCardView}>
+                <Card style={styles.card} status="danger">
+                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/peas.png')} style={styles.cardImage} />
+                    <Text style={styles.cardText}>Peas</Text>
+                    <Text style={styles.cardPrice}>$ 40 per/kg</Text>
+                    <Text status="danger" style={styles.inStock}>Out of Stock</Text>
+                    <Button appearance="outline" disabled={true} style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: '#ddd' }} />) }} >Add to Cart</Button>
+                </Card>
+            </View>
+
+
+#################################################################
+
+{
+    itemsDetailsLoaded ? itemsList.map((i)=>{
+        return(
+            <View style={styles.twoCardView}>
+                <Card style={styles.card} status={i[0]['quantity']>10 ? 'primary': i[0]['quantity']==0 ? 'danger': 'warning'}>
+                <Image source={{ uri: 'https://pngimg.com/d/cauliflower_PNG12673.png' }} style={styles.cardImage} />
+                <Text style={styles.cardText}>{i[0]['itemId']}</Text>
+                <Text style={styles.cardPrice}>$ {i[0]['price']} per/kg</Text>
+                <Text status={i[0]['quantity']>10 ? 'primary': i[0]['quantity']==0 ? 'danger': 'warning'} style={styles.inStock}>{i[0]['quantity']>10 ? 'In Stock': i[0]['quantity']==0 ? 'Out Of Stock': 'Few left in Stock'}</Text>
+                <Button appearance="outline" disabled={i[0]['quantity']!=0 ? false:true} style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: i[0]['quantity']!=0 ? "#00bb00":'#ccc'}} />)}} >Add to Cart</Button>
+        {/* <Counter qty={1} /> */}
+                </Card>
+    <Card style={styles.card} status={i[1]['quantity']>10 ? 'primary': i[1]['quantity']==0 ? 'danger': 'warning'}>
+        <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/carrot.png')} style={styles.cardImage} />
+        <Text style={styles.cardText}>{i[1]['itemId']}</Text>
+        <Text style={styles.cardPrice}>$ {i[1]['price']} per/kg</Text>
+        <Text status={i[1]['quantity']>10 ? 'primary': i[1]['quantity']==0 ? 'danger': 'warning'} style={styles.inStock}>{i[1]['quantity']>10 ? 'In Stock': i[1]['quantity']==0 ? 'Out Of Stock': 'Few left in Stock'}</Text>
+        <Button appearance="outline" disabled={i[1]['quantity']!=0 ? false:true} style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: i[1]['quantity']!=0 ? "#00bb00":'#ccc' }} />) }} >Add to Cart</Button>
+    </Card>
+</View>
+        )
+    }) : ''
+}

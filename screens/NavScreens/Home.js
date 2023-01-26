@@ -1,5 +1,5 @@
 import { Button, Card, Text } from "@ui-kitten/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ImageSlider } from "react-native-image-slider-banner";
 import { Image, ScrollView, StyleSheet, View } from "react-native";
@@ -7,139 +7,114 @@ import { Entypo, Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import Counter from "./components/Counter";
 
-export default function Home({navigator}){
+export default function Home(props, { navigation }) {
 
-    const [itemsSelected, setitemsSelected] = useState({'1': 'he'})
-    axios({baseURL: 'http://localhost:8000'})
+    const [itemsSelected, setitemsSelected] = useState({ '1': 'he' })
+    const [itemsList, setitemsList] = useState([])
+    const [itemsDetails, setitemsDetails] = useState({})
+    const [itemsDetailsLoaded, setitemsDetailsLoaded] = useState(false)
+    const [cart, setcart] = useState({})
+    
+    useEffect(() => {
+        async function getItems() {
+            const response = await fetch(`http://192.168.0.5:8000/api/users/getItems`)
+            const data = await response.json()
+            // console.log(data);
+            setitemsList(data)
+            const newObj = {}
+            // console.log(itemsList);
+            await Promise.all(data.map(async(i)=>{
+                const response2 = await fetch(`http://192.168.0.5:8000/api/items/getItemDetails?itemId=${i['itemId']}`)
+                const data2 = await response2.json()
+                // console.log(data2);
 
-    async function a(){
-        const response = await axios.get('http://localhost:8000/', {method: 'get'})
-        console.log(response);
-    }
-    a()
+                newObj[data2['itemId']]=data2
+            }))
+            setitemsDetails(newObj)
+            setitemsDetailsLoaded(true)
+            // console.log("Item Details==>", itemsDetails)
+            console.log("+++", itemsDetails)
+            // console.log("Item Details2==>", itemsDetails)
+        }
+        getItems()
+    }, [])
 
-    return(
+    return (
         // <SafeAreaView>
-            <ScrollView>
-            <ImageSlider caroselImageContainerStyle={{marginTop: -50}} data={[
-                {img: require('/home/tom/Desktop/Projects/user_app-1/assets/fresh.webp')},
-                {img: require('/home/tom/Desktop/Projects/user_app-1/assets/sale30.webp')},
-                {img: require('/home/tom/Desktop/Projects/user_app-1/assets/sale.jpg')}
+        <ScrollView>
+            <ImageSlider caroselImageContainerStyle={{ marginTop: -50 }} data={[
+                { img: require('/home/tom/Desktop/Projects/user_app-1/assets/fresh.webp') },
+                { img: require('/home/tom/Desktop/Projects/user_app-1/assets/sale30.webp') },
+                { img: require('/home/tom/Desktop/Projects/user_app-1/assets/sale.jpg') }
             ]} localImg autoPlay={true} />
-            <Text style={{marginTop: -30, marginLeft: 16, fontWeight: '800', fontSize: 16}}>Freshly Arrived Vegies</Text>
-            <View style={styles.twoCardView}>
-                <Card style={styles.card} status="primary">
-                    <Image source={{uri: 'https://pngimg.com/d/cauliflower_PNG12673.png'}} style={styles.cardImage} />
-                    <Text style={styles.cardText}>Cauliflower</Text>
-                    <Text style={styles.cardPrice}>$ 40 per/kg</Text>
-                    <Text status="primary" style={styles.inStock}>In Stock</Text>
-                    {/* <Button appearance="outline" style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#00bb00'}} />)}} >Add to Cart</Button> */}
-                    <Counter qty={1} />
-                </Card>
-                <Card style={styles.card} status="primary">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/carrot.png')} style={styles.cardImage} />
-                    <Text style={styles.cardText}>Carrot</Text>
-                    <Text style={styles.cardPrice}>$ 20 per/kg</Text>
-                    <Text status="primary" style={styles.inStock}>In Stock</Text>
-                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#00bb00'}} />)}} >Add to Cart</Button>
-                </Card>
+            <Text style={{ marginTop: -30, marginLeft: 16, fontWeight: '800', fontSize: 16 }}>Freshly Arrived Vegies</Text>
+            <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', }} id={cart}>
+                {
+                    itemsDetailsLoaded ? itemsList.map((i)=>{
+                        console.log(cart);
+                        console.log('========================================');
+                        return (
+                            <Card style={styles.card} key={i['itemId']} status={i['quantity']>10 ? 'primary': i['quantity']==0 ? 'danger': 'warning'}>
+                                <Image source={{uri: `http://192.168.0.5:8000/api/getFile?uri=${itemsDetails[i['itemId']]['itemImage']}`}} style={styles.cardImage} />
+                                <Text style={styles.cardText}>{itemsDetails[i['itemId']]['itemName']}</Text>
+                                <Text style={styles.cardPrice}>$ {i['price']} per/kg</Text>
+                                <Text status={i['quantity']>10 ? 'primary': i['quantity']==0 ? 'danger': 'warning'} style={styles.inStock}>{i['quantity']>10 ? 'In Stock': i['quantity']==0 ? 'Out Of Stock': 'Few left in Stock'}</Text>
+                                {
+                                    cart[i['itemId']]==null || cart[i['itemId']]==0 ? 
+                                    <Button appearance="outline" disabled={i['quantity']!=0 ? false:true} style={styles.addBtn} onPress={()=>{let obj=cart; obj[i['itemId']]=1; console.log("OBJ==", obj); setcart(obj); console.log("New Cart=", cart);}} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: i['quantity']!=0 ? "#00bb00":'#ccc' }} />) }} >Add to Cart</Button> :  
+                                    <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderColor: "#00bb00", borderWidth: 2, borderRadius: 5, backgroundColor: "#00bb00", marginTop: 6}}>
+                                        <Entypo name="minus" size={14} style={{alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#00bb00', color: "#fff", backgroundColor: "#00bb00"}} onPress={()=>{let obj=cart; console.log("OBJ@++", obj); obj[i['itemId']]=cart[i['itemId']]-1; console.log(obj); setcart(obj)}} />
+                                        <Text style={{fontSize: 14, fontWeight: '700', borderLeftColor: "#00bb00", borderRightColor: '#00bb00', backgroundColor: "#fff", paddingVertical: 6, alignSelf: 'center', borderTopWidth: 0, borderBottomWidth: 0, paddingHorizontal: 14, paddingLeft: 18, borderWidth: 2}}>{cart[i['itemId']]}</Text>
+                                        <Entypo name="plus" size={14} style={{alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#00bb00', color: "#fff", backgroundColor: "#00bb00"}} onPress={()=>{let obj=cart; obj[i['itemId']]=cart[i['itemId']]+1; setcart(obj)}} />
+                                    </View>
+                                }
+                            </Card> 
+                        )
+                    }):''
+                }
             </View>
-            <View style={styles.twoCardView}>
-                <Card style={styles.card} status="primary">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png')} style={styles.cardImage} />
-                    <Text style={styles.cardText}>Tomato</Text>
-                    <Text style={styles.cardPrice}>$ 60 per/kg</Text>
-                    <Text status="primary" style={styles.inStock}>In Stock</Text>
-                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#00bb00'}} />)}} >Add to Cart</Button>
-                </Card>
-                <Card style={styles.card} status="primary">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/cabbage.png')} style={styles.cardImage} />
-                    <Text style={styles.cardText}>Cabbage</Text>
-                    <Text style={styles.cardPrice}>$ 30 per/kg</Text>
-                    <Text status="primary" style={styles.inStock}>In Stock</Text>
-                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#00bb00'}} />)}} >Add to Cart</Button>
-                </Card>
-            </View>
-            <View style={styles.twoCardView}>
-                <Card style={styles.card} status="warning">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/broccoli.png')} style={styles.cardImage} />
-                    <Text style={styles.cardText}>Broccoli</Text>
-                    <Text style={styles.cardPrice}>$ 60 per/kg</Text>
-                    <Text status="warning" style={styles.inStock}>Few left Stock</Text>
-                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#00bb00'}} />)}} >Add to Cart</Button>
-                </Card>
-                <Card style={styles.card} status="warning">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/capsicum.png')} style={styles.cardImage} />
-                    <Text style={styles.cardText}>Capsicum</Text>
-                    <Text style={styles.cardPrice}>$ 50 per/kg</Text>
-                    <Text status="warning" style={styles.inStock}>Few left in Stock</Text>
-                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#00bb00'}} />)}} >Add to Cart</Button>
-                </Card>
-            </View>
-            <View style={styles.twoCardView}>
-                <Card style={styles.card} status="warning">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/potato.png')} style={styles.cardImage} />
-                    <Text style={styles.cardText}>Potato</Text>
-                    <Text style={styles.cardPrice}>$ 8 per/kg</Text>
-                    <Text status="warning" style={styles.inStock}>Few left in Stock</Text>
-                    <Button appearance="outline" style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#00bb00'}} />)}} >Add to Cart</Button>
-                </Card>
-                <Card style={styles.card} status="danger">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/banana.png')} style={styles.cardImage} />
-                    <Text style={styles.cardText}>Banana</Text>
-                    <Text style={styles.cardPrice}>$ 70 per/kg</Text>
-                    <Text status="danger" style={styles.inStock}>Out of Stock</Text>
-                    <Button appearance="outline" disabled={true} style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#bbb'}} />)}} >Add to Cart</Button>
-                </Card>
-            </View>
-            <View style={styles.twoCardView}>
-                <Card style={styles.card} status="danger">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/peas.png')} style={styles.cardImage} />
-                    <Text style={styles.cardText}>Peas</Text>
-                    <Text style={styles.cardPrice}>$ 40 per/kg</Text>
-                    <Text status="danger" style={styles.inStock}>Out of Stock</Text>
-                    <Button appearance="outline" disabled={true} style={styles.addBtn} accessoryLeft={()=>{return(<Entypo name="plus" style={{fontSize: 20, color: '#ddd'}} />)}} >Add to Cart</Button>
-                </Card>
-            </View>
-            </ScrollView>
+        </ScrollView>
         // </SafeAreaView>
     )
 }
 
+// {itemsDetails[(i['itemId'])]['itemName']}
+
 const styles = StyleSheet.create({
-    twoCardView:{
+    twoCardView: {
         display: 'flex',
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'space-evenly',
         marginTop: 10
     },
-    card:{
+    card: {
         width: '47%',
         shadowColor: '#000',
-        elevation: 2
+        elevation: 2,
+        marginTop: 10
     },
-    cardImage:{
+    cardImage: {
         width: '100%',
         height: 90,
         resizeMode: 'contain'
     },
-    cardText:{
+    cardText: {
         marginTop: 10,
         fontWeight: '700',
         fontSize: 14
     },
-    cardPrice:{
+    cardPrice: {
         fontWeight: '700',
         fontSize: 12,
         marginTop: -1
     },
-    inStock:{
+    inStock: {
         fontSize: 12,
         marginTop: 8,
         fontWeight: '700'
     },
-    addBtn:{
+    addBtn: {
         backgroundColor: '#FFF',
         fontWeight: '500',
         paddingVertical: 5,

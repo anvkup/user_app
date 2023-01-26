@@ -23,7 +23,7 @@ export default function Cart({navigator}){
                 </View>
             </View>
             <View style={styles.cartItem}>
-                <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/cabbage.png')} style={styles.image} />
+                <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/potato.png')} style={styles.image} />
                 <View style={{flexGrow: 1}}>
                     <Text style={styles.title}>Cabbage</Text>
                     <Text style={styles.qty}>Qty: 2kg</Text>
@@ -36,10 +36,10 @@ export default function Cart({navigator}){
                 </View>
             </View>
             <View style={styles.cartItem}>
-                <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/cabbage.png')} style={styles.image} />
+                <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/peas.png')} style={styles.image} />
                 <View style={{flexGrow: 1}}>
-                    <Text style={styles.title}>Cabbage</Text>
-                    <Text style={styles.qty}>Qty: 2kg</Text>
+                    <Text style={styles.title}>Peas</Text>
+                    <Text style={styles.qty}>$ 30 per/kg</Text>
                     <View style={styles.innerView}>
                         <Text style={styles.price}>$ 50</Text>
                     </View>
@@ -48,7 +48,7 @@ export default function Cart({navigator}){
                     <Counter qty={1} />
                 </View>
             </View>
-            <CartItem img={'/home/tom/Desktop/Projects/user_app-1/assets/vegies/cabbage.png'} title="Cauliflower" pricePerUnit={40} qty={1} />
+            <CartItem img={'/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png'} title="Tomato" pricePerUnit={50} qty={2} />
             <View style={[styles.cartBottomText, {backgroundColor: '#fff', paddingBottom: 10}]}><Text style={styles.cartBottomText}>Sub Total</Text><Text style={styles.cartBottomText}>$ 190</Text></View>
             {/* <View style={{backgroundColor: '#fff', paddingTop: 7}}>
                 <View style={styles.cartBottomText}><Text style={styles.cartBottomText}>Delivery Charges</Text><Text style={styles.cartBottomText}>$ 30</Text></View>

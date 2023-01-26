@@ -4,7 +4,7 @@ import Counter from "./Counter";
 
 export default function CartItem(props) {
     return <View style={styles.cartItem}>
-                <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/cabbage.png')} style={styles.image} />
+                <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/potato.png')} style={styles.image} />
                 <View style={{flexGrow: 1}}>
                     <Text style={styles.title}>{props.title}</Text>
                     <Text style={styles.qty}>$ {props.pricePerUnit} per/kg</Text>
