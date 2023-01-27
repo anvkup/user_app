@@ -1,10 +1,13 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import Counter from "./Counter";
 
 export default function CartItem(props) {
+
+    
+
     return <View style={styles.cartItem}>
-                <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/potato.png')} style={styles.image} />
+                <Image source={{uri: `http://192.168.0.5:8000/api/getFile?uri=${props.img}`}} style={styles.image} />
                 <View style={{flexGrow: 1}}>
                     <Text style={styles.title}>{props.title}</Text>
                     <Text style={styles.qty}>$ {props.pricePerUnit} per/kg</Text>

@@ -1,61 +1,72 @@
 import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons"
 import { Button, Card, Text } from "@ui-kitten/components"
-import { Image, ScrollView, StyleSheet, View } from "react-native"
+import { useEffect, useState } from "react"
+import { useFocusEffect } from "@react-navigation/native"
+import { Image, ScrollView, StyleSheet, View, Alert } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import CartItem from "./components/CartItem"
 import Counter from "./components/Counter"
 
-export default function Cart({navigator}){
+export default function Cart(props, {navigation}){
+
+    const [cartItems, setcartItems] = useState({})
+    // console.log();
+    const [prices, setprices] = useState({})
+    const [detailsLoaded, setdetailsLoaded] = useState(false)
+    const [a, seta] = useState(1)
+
+    useFocusEffect(()=>{
+        seta(2)
+    })
+    
+    useEffect(() => {
+        
+        async function getItems() {
+            const response = await fetch(`http://192.168.0.5:8000/api/users/getItems`)
+            const data = await response.json()
+
+            let obj={}
+            data.map((i)=>{
+                obj[i['itemId']]=i['price']
+                // setprices({...prices, obj})
+                console.log("new prices=>", prices);
+            })
+            setprices(obj)
+
+            // console.log(data);
+            // setitemsList(data)
+            // console.log(itemsList);
+            let newObj={}
+            await Promise.all(Object.keys(props.cart).map(async(i)=>{
+                const response2 = await fetch(`http://192.168.0.5:8000/api/items/getItemDetails?itemId=${i}`)
+                const data2 = await response2.json()
+                // console.log(data2);
+
+                newObj[i]=data2
+            }))
+            console.log(newObj);
+            setcartItems(newObj)
+            setdetailsLoaded(true)
+        }
+        getItems()
+        console.log("CI", cartItems);
+    }, [])
+
     return(
         <ScrollView>
-            <Text style={{margin: 9, fontWeight: '700', fontSize: 14, marginLeft: 12}}>Cart Items List</Text>
-            <View style={styles.cartItem}>
-                <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/cabbage.png')} style={styles.image} />
-                <View style={{flexGrow: 1}}>
-                    <Text style={styles.title}>Cabbage</Text>
-                    <Text style={styles.qty}>$ 25 per/kg</Text>
-                    <View style={styles.innerView}>
-                        <Text style={styles.price}>$ 50</Text>
-                    </View>
-                </View>
-                <View style={{marginRight: 20}}>
-                    <Counter qty={1} />
-                </View>
-            </View>
-            <View style={styles.cartItem}>
-                <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/potato.png')} style={styles.image} />
-                <View style={{flexGrow: 1}}>
-                    <Text style={styles.title}>Cabbage</Text>
-                    <Text style={styles.qty}>Qty: 2kg</Text>
-                    <View style={styles.innerView}>
-                        <Text style={styles.price}>$ 50</Text>
-                    </View>
-                </View>
-                <View style={{marginRight: 20}}>
-                    <Counter qty={1} />
-                </View>
-            </View>
-            <View style={styles.cartItem}>
-                <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/peas.png')} style={styles.image} />
-                <View style={{flexGrow: 1}}>
-                    <Text style={styles.title}>Peas</Text>
-                    <Text style={styles.qty}>$ 30 per/kg</Text>
-                    <View style={styles.innerView}>
-                        <Text style={styles.price}>$ 50</Text>
-                    </View>
-                </View>
-                <View style={{marginRight: 20}}>
-                    <Counter qty={1} />
-                </View>
-            </View>
-            <CartItem img={'/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png'} title="Tomato" pricePerUnit={50} qty={2} />
+            <Text id={a+90} style={{margin: 9, fontWeight: '700', fontSize: 14, marginLeft: 12}}>Cart Items List</Text>
+            
+
+            {
+                detailsLoaded ? Object.keys(cartItems).map((i)=>{
+                    console.log("I", cartItems[i]['itemImage']);
+                    return <CartItem key={i+a} img={cartItems[i]['itemImage']} title={cartItems[i]['itemName']} qty={props.cart[cartItems[i]['itemId']]} pricePerUnit={prices[cartItems[i]['itemId']]} />
+                }):''
+            }
+            {/* <CartItem img={'/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png'} title="Tomatoo" pricePerUnit={50} qty={2} /> */}
             <View style={[styles.cartBottomText, {backgroundColor: '#fff', paddingBottom: 10}]}><Text style={styles.cartBottomText}>Sub Total</Text><Text style={styles.cartBottomText}>$ 190</Text></View>
-            {/* <View style={{backgroundColor: '#fff', paddingTop: 7}}>
-                <View style={styles.cartBottomText}><Text style={styles.cartBottomText}>Delivery Charges</Text><Text style={styles.cartBottomText}>$ 30</Text></View>
-                <View style={styles.cartBottomText}><Text style={styles.cartBottomText}>Discount</Text><Text style={styles.cartBottomText}>-  $ 40</Text></View>
-                <View style={[styles.cartBottomText, {marginTop: 5}]}><Text style={[styles.cartBottomText, {color: "#000"}]}>Total Amount</Text><Text style={[styles.cartBottomText]}>-  $ 180</Text></View>
-            </View> */}
-            <Button status="primary" style={{width: '95%', alignSelf: 'center', marginVertical: 10}} accessoryLeft={()=>{return <FontAwesome name="check-square-o" size={16} color={"#fff"} />}}>Checkout</Button>
+            
+            <Button status="primary"onPress={()=>{Alert.alert("ALERT !", "ALERT BODY,", [{text: "btn1"}, {text: 'btn2'}])}}  style={{width: '95%', alignSelf: 'center', marginVertical: 10}} accessoryLeft={()=>{return <FontAwesome name="check-square-o" size={16} color={"#fff"} />}}>Checkout</Button>
         </ScrollView>
     )
 }

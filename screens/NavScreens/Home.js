@@ -9,11 +9,10 @@ import Counter from "./components/Counter";
 
 export default function Home(props, { navigation }) {
 
-    const [itemsSelected, setitemsSelected] = useState({ '1': 'he' })
     const [itemsList, setitemsList] = useState([])
     const [itemsDetails, setitemsDetails] = useState({})
     const [itemsDetailsLoaded, setitemsDetailsLoaded] = useState(false)
-    const [cart, setcart] = useState({})
+    // const [props.cart, props.setCart] = useState({})
     
     useEffect(() => {
         async function getItems() {
@@ -21,7 +20,7 @@ export default function Home(props, { navigation }) {
             const data = await response.json()
             // console.log(data);
             setitemsList(data)
-            const newObj = {}
+            let newObj = {}
             // console.log(itemsList);
             await Promise.all(data.map(async(i)=>{
                 const response2 = await fetch(`http://192.168.0.5:8000/api/items/getItemDetails?itemId=${i['itemId']}`)
@@ -48,10 +47,10 @@ export default function Home(props, { navigation }) {
                 { img: require('/home/tom/Desktop/Projects/user_app-1/assets/sale.jpg') }
             ]} localImg autoPlay={true} />
             <Text style={{ marginTop: -30, marginLeft: 16, fontWeight: '800', fontSize: 16 }}>Freshly Arrived Vegies</Text>
-            <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', }} id={cart}>
+            <View style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', }} id={props.cart}>
                 {
                     itemsDetailsLoaded ? itemsList.map((i)=>{
-                        console.log(cart);
+                        console.log(props.cart);
                         console.log('========================================');
                         return (
                             <Card style={styles.card} key={i['itemId']} status={i['quantity']>10 ? 'primary': i['quantity']==0 ? 'danger': 'warning'}>
@@ -60,12 +59,12 @@ export default function Home(props, { navigation }) {
                                 <Text style={styles.cardPrice}>$ {i['price']} per/kg</Text>
                                 <Text status={i['quantity']>10 ? 'primary': i['quantity']==0 ? 'danger': 'warning'} style={styles.inStock}>{i['quantity']>10 ? 'In Stock': i['quantity']==0 ? 'Out Of Stock': 'Few left in Stock'}</Text>
                                 {
-                                    cart[i['itemId']]==null || cart[i['itemId']]==0 ? 
-                                    <Button appearance="outline" disabled={i['quantity']!=0 ? false:true} style={styles.addBtn} onPress={()=>{let obj=cart; obj[i['itemId']]=1; console.log("OBJ==", obj); setcart(obj); console.log("New Cart=", cart);}} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: i['quantity']!=0 ? "#00bb00":'#ccc' }} />) }} >Add to Cart</Button> :  
+                                    props.cart[i['itemId']]==null || props.cart[i['itemId']]==0 ? 
+                                    <Button appearance="outline" disabled={i['quantity']!=0 ? false:true} style={styles.addBtn} onPress={()=>{let obj=props.cart; obj[i['itemId']]=1; console.log("OBJ==", obj); props.setCart(obj); console.log("New Cart=", props.cart);}} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: i['quantity']!=0 ? "#00bb00":'#ccc' }} />) }} >Add to Cart</Button> :  
                                     <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderColor: "#00bb00", borderWidth: 2, borderRadius: 5, backgroundColor: "#00bb00", marginTop: 6}}>
-                                        <Entypo name="minus" size={14} style={{alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#00bb00', color: "#fff", backgroundColor: "#00bb00"}} onPress={()=>{let obj=cart; console.log("OBJ@++", obj); obj[i['itemId']]=cart[i['itemId']]-1; console.log(obj); setcart(obj)}} />
-                                        <Text style={{fontSize: 14, fontWeight: '700', borderLeftColor: "#00bb00", borderRightColor: '#00bb00', backgroundColor: "#fff", paddingVertical: 6, alignSelf: 'center', borderTopWidth: 0, borderBottomWidth: 0, paddingHorizontal: 14, paddingLeft: 18, borderWidth: 2}}>{cart[i['itemId']]}</Text>
-                                        <Entypo name="plus" size={14} style={{alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#00bb00', color: "#fff", backgroundColor: "#00bb00"}} onPress={()=>{let obj=cart; obj[i['itemId']]=cart[i['itemId']]+1; setcart(obj)}} />
+                                        <Entypo name="minus" size={14} style={{alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#00bb00', color: "#fff", backgroundColor: "#00bb00"}} onPress={()=>{let obj=props.cart; console.log("OBJ@++", obj); obj[i['itemId']]=props.cart[i['itemId']]-1; console.log(obj); props.setCart(obj)}} />
+                                        <Text style={{fontSize: 14, fontWeight: '700', borderLeftColor: "#00bb00", borderRightColor: '#00bb00', backgroundColor: "#fff", paddingVertical: 6, alignSelf: 'center', borderTopWidth: 0, borderBottomWidth: 0, paddingHorizontal: 14, paddingLeft: 18, borderWidth: 2}}>{props.cart[i['itemId']]}</Text>
+                                        <Entypo name="plus" size={14} style={{alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#00bb00', color: "#fff", backgroundColor: "#00bb00"}} onPress={()=>{let obj=props.cart; obj[i['itemId']]=props.cart[i['itemId']]+1; props.setCart(obj)}} />
                                     </View>
                                 }
                             </Card> 
