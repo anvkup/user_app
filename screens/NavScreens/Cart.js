@@ -1,13 +1,16 @@
 import { AntDesign, FontAwesome, FontAwesome5 } from "@expo/vector-icons"
 import { Button, Card, Text } from "@ui-kitten/components"
-import { useEffect, useState } from "react"
-import { useFocusEffect } from "@react-navigation/native"
+import { useEffect, useState, React } from "react"
+import { InteractionManager } from "react-native"
+import { useFocusEffect, useNavigation } from "@react-navigation/native"
 import { Image, ScrollView, StyleSheet, View, Alert } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import CartItem from "./components/CartItem"
 import Counter from "./components/Counter"
 
-export default function Cart(props, {navigation}){
+export default function Cart(props){
+
+    const navigation = useNavigation()
 
     const [cartItems, setcartItems] = useState({})
     // console.log();
@@ -15,10 +18,6 @@ export default function Cart(props, {navigation}){
     const [detailsLoaded, setdetailsLoaded] = useState(false)
     const [a, seta] = useState(1)
 
-    useFocusEffect(()=>{
-        seta(2)
-    })
-    
     useEffect(() => {
         
         async function getItems() {
@@ -29,7 +28,7 @@ export default function Cart(props, {navigation}){
             data.map((i)=>{
                 obj[i['itemId']]=i['price']
                 // setprices({...prices, obj})
-                console.log("new prices=>", prices);
+                console.log("new prices=>", prices)
             })
             setprices(obj)
 
@@ -44,7 +43,7 @@ export default function Cart(props, {navigation}){
 
                 newObj[i]=data2
             }))
-            console.log(newObj);
+            console.log(newObj)
             setcartItems(newObj)
             setdetailsLoaded(true)
         }
@@ -66,7 +65,7 @@ export default function Cart(props, {navigation}){
             {/* <CartItem img={'/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png'} title="Tomatoo" pricePerUnit={50} qty={2} /> */}
             <View style={[styles.cartBottomText, {backgroundColor: '#fff', paddingBottom: 10}]}><Text style={styles.cartBottomText}>Sub Total</Text><Text style={styles.cartBottomText}>$ 190</Text></View>
             
-            <Button status="primary"onPress={()=>{Alert.alert("ALERT !", "ALERT BODY,", [{text: "btn1"}, {text: 'btn2'}])}}  style={{width: '95%', alignSelf: 'center', marginVertical: 10}} accessoryLeft={()=>{return <FontAwesome name="check-square-o" size={16} color={"#fff"} />}}>Checkout</Button>
+            <Button status="primary" onPress={()=>{navigation.navigate("Current Order")}}  style={{width: '95%', alignSelf: 'center', marginVertical: 10}} accessoryLeft={()=>{return <FontAwesome name="check-square-o" size={16} color={"#fff"} />}}>Checkout</Button>
         </ScrollView>
     )
 }
