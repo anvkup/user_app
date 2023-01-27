@@ -59,7 +59,7 @@ export default function Cart(props){
             {
                 detailsLoaded ? Object.keys(cartItems).map((i)=>{
                     console.log("I", cartItems[i]['itemImage']);
-                    return <CartItem key={Math.floor(Math.random()*10000)} img={cartItems[i]['itemImage']} cart={props.cart} setcart={props.setcart} title={cartItems[i]['itemName']} qty={props.cart[cartItems[i]['itemId']]} pricePerUnit={prices[cartItems[i]['itemId']]} />
+                    return <CartItem key={Math.floor(Math.random()*10000)} id={cartItems[i]['itemId']} img={cartItems[i]['itemImage']} cart={props.cart} a={a} seta={seta} setcart={props.setcart} title={cartItems[i]['itemName']} qty={props.cart[cartItems[i]['itemId']]} pricePerUnit={prices[cartItems[i]['itemId']]} />
                 }):''
             }
             {/* <CartItem img={'/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png'} title="Tomatoo" pricePerUnit={50} qty={2} /> */}
