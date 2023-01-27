@@ -13,7 +13,8 @@ export default function Home(props, { navigation }) {
     const [itemsDetails, setitemsDetails] = useState({})
     const [itemsDetailsLoaded, setitemsDetailsLoaded] = useState(false)
     // const [props.cart, props.setCart] = useState({})
-    
+    const [a, seta] = useState(1)
+
     useEffect(() => {
         async function getItems() {
             const response = await fetch(`http://192.168.0.5:8000/api/users/getItems`)
@@ -53,18 +54,18 @@ export default function Home(props, { navigation }) {
                         console.log(props.cart);
                         console.log('========================================');
                         return (
-                            <Card style={styles.card} key={i['itemId']} status={i['quantity']>10 ? 'primary': i['quantity']==0 ? 'danger': 'warning'}>
+                            <Card style={styles.card} id={a} key={i['itemId']} status={i['quantity']>10 ? 'primary': i['quantity']==0 ? 'danger': 'warning'}>
                                 <Image source={{uri: `http://192.168.0.5:8000/api/getFile?uri=${itemsDetails[i['itemId']]['itemImage']}`}} style={styles.cardImage} />
                                 <Text style={styles.cardText}>{itemsDetails[i['itemId']]['itemName']}</Text>
                                 <Text style={styles.cardPrice}>$ {i['price']} per/kg</Text>
                                 <Text status={i['quantity']>10 ? 'primary': i['quantity']==0 ? 'danger': 'warning'} style={styles.inStock}>{i['quantity']>10 ? 'In Stock': i['quantity']==0 ? 'Out Of Stock': 'Few left in Stock'}</Text>
                                 {
                                     props.cart[i['itemId']]==null || props.cart[i['itemId']]==0 ? 
-                                    <Button appearance="outline" disabled={i['quantity']!=0 ? false:true} style={styles.addBtn} onPress={()=>{let obj=props.cart; obj[i['itemId']]=1; console.log("OBJ==", obj); props.setCart(obj); console.log("New Cart=", props.cart);}} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: i['quantity']!=0 ? "#00bb00":'#ccc' }} />) }} >Add to Cart</Button> :  
+                                    <Button appearance="outline" disabled={i['quantity']!=0 ? false:true} style={styles.addBtn} onPress={()=>{let obj=props.cart; seta(i['itemId']*100); obj[i['itemId']]=1; console.log("OBJ==", obj); props.setCart(obj); console.log("New Cart=", props.cart);}} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: i['quantity']!=0 ? "#00bb00":'#ccc' }} />) }} >Add to Cart</Button> :  
                                     <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderColor: "#00bb00", borderWidth: 2, borderRadius: 5, backgroundColor: "#00bb00", marginTop: 6}}>
-                                        <Entypo name="minus" size={14} style={{alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#00bb00', color: "#fff", backgroundColor: "#00bb00"}} onPress={()=>{let obj=props.cart; console.log("OBJ@++", obj); obj[i['itemId']]=props.cart[i['itemId']]-1; console.log(obj); props.setCart(obj)}} />
+                                        <Entypo name="minus" size={14} style={{alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#00bb00', color: "#fff", backgroundColor: "#00bb00"}} onPress={()=>{let obj=props.cart; seta(Math.floor(Math.random()*1000)+i['itemId']); console.log("OBJ@++", obj); obj[i['itemId']]=props.cart[i['itemId']]-1; console.log(obj); props.setCart(obj)}} />
                                         <Text style={{fontSize: 14, fontWeight: '700', borderLeftColor: "#00bb00", borderRightColor: '#00bb00', backgroundColor: "#fff", paddingVertical: 6, alignSelf: 'center', borderTopWidth: 0, borderBottomWidth: 0, paddingHorizontal: 14, paddingLeft: 18, borderWidth: 2}}>{props.cart[i['itemId']]}</Text>
-                                        <Entypo name="plus" size={14} style={{alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#00bb00', color: "#fff", backgroundColor: "#00bb00"}} onPress={()=>{let obj=props.cart; obj[i['itemId']]=props.cart[i['itemId']]+1; props.setCart(obj)}} />
+                                        <Entypo name="plus" size={14} style={{alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#00bb00', color: "#fff", backgroundColor: "#00bb00"}} onPress={()=>{let obj=props.cart; seta(Math.floor(Math.random()*1000)+i['itemId']); obj[i['itemId']]=props.cart[i['itemId']]+1; props.setCart(obj)}} />
                                     </View>
                                 }
                             </Card> 

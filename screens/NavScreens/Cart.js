@@ -59,13 +59,13 @@ export default function Cart(props){
             {
                 detailsLoaded ? Object.keys(cartItems).map((i)=>{
                     console.log("I", cartItems[i]['itemImage']);
-                    return <CartItem key={i+a} img={cartItems[i]['itemImage']} title={cartItems[i]['itemName']} qty={props.cart[cartItems[i]['itemId']]} pricePerUnit={prices[cartItems[i]['itemId']]} />
+                    return <CartItem key={Math.floor(Math.random()*10000)} img={cartItems[i]['itemImage']} cart={props.cart} setcart={props.setcart} title={cartItems[i]['itemName']} qty={props.cart[cartItems[i]['itemId']]} pricePerUnit={prices[cartItems[i]['itemId']]} />
                 }):''
             }
             {/* <CartItem img={'/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png'} title="Tomatoo" pricePerUnit={50} qty={2} /> */}
             <View style={[styles.cartBottomText, {backgroundColor: '#fff', paddingBottom: 10}]}><Text style={styles.cartBottomText}>Sub Total</Text><Text style={styles.cartBottomText}>$ 190</Text></View>
             
-            <Button status="primary" onPress={()=>{navigation.navigate("Current Order")}}  style={{width: '95%', alignSelf: 'center', marginVertical: 10}} accessoryLeft={()=>{return <FontAwesome name="check-square-o" size={16} color={"#fff"} />}}>Checkout</Button>
+            <Button status="primary" onPress={()=>{navigation.navigate("Current Order", {prices: prices, cartItems: cartItems, cart: props.cart, setcart: props.setcart})}} style={{width: '95%', alignSelf: 'center', marginVertical: 10, elevation: 2}} accessoryLeft={()=>{return <FontAwesome name="check-square-o" size={16} color={"#fff"} />}}>Checkout</Button>
         </ScrollView>
     )
 }
