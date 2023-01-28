@@ -12,6 +12,7 @@
     "@eva-design/eva": "^2.1.1",
     "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^0.17.2",
+    "@react-native-async-storage/async-storage": "github:react-native-async-storage/async-storage",
     "@react-navigation/bottom-tabs": "^6.5.3",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",

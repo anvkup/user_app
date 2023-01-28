@@ -9,7 +9,7 @@ export default function CartItem(props) {
     const seta = props.seta
 
     return props.qty!=0 && <View style={styles.cartItem} key={a}>
-                <Image source={{uri: `http://192.168.0.5:8000/api/getFile?uri=${props.img}`}} style={styles.image} />
+                <Image source={{uri: `http://156.67.219.185:8002/api/getFile?uri=${props.img}`}} style={styles.image} />
                 <View style={{flexGrow: 1}}>
                     <Text style={styles.title}>{props.title}</Text>
                     <Text style={styles.qty}>$ {props.pricePerUnit} per/kg</Text>

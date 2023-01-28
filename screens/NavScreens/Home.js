@@ -17,14 +17,14 @@ export default function Home(props, { navigation }) {
 
     useEffect(() => {
         async function getItems() {
-            const response = await fetch(`http://192.168.0.5:8000/api/users/getItems`)
+            const response = await fetch(`http://156.67.219.185:8002/api/users/getItems`)
             const data = await response.json()
             // console.log(data);
             setitemsList(data)
             let newObj = {}
             // console.log(itemsList);
             await Promise.all(data.map(async(i)=>{
-                const response2 = await fetch(`http://192.168.0.5:8000/api/items/getItemDetails?itemId=${i['itemId']}`)
+                const response2 = await fetch(`http://156.67.219.185:8002/api/items/getItemDetails?itemId=${i['itemId']}`)
                 const data2 = await response2.json()
                 // console.log(data2);
 
@@ -55,7 +55,7 @@ export default function Home(props, { navigation }) {
                         console.log('========================================');
                         return (
                             <Card style={styles.card} id={a} key={i['itemId']} status={i['quantity']>10 ? 'primary': i['quantity']==0 ? 'danger': 'warning'}>
-                                <Image source={{uri: `http://192.168.0.5:8000/api/getFile?uri=${itemsDetails[i['itemId']]['itemImage']}`}} style={styles.cardImage} />
+                                <Image source={{uri: `http://156.67.219.185:8002/api/getFile?uri=${itemsDetails[i['itemId']]['itemImage']}`}} style={styles.cardImage} />
                                 <Text style={styles.cardText}>{itemsDetails[i['itemId']]['itemName']}</Text>
                                 <Text style={styles.cardPrice}>$ {i['price']} per/kg</Text>
                                 <Text status={i['quantity']>10 ? 'primary': i['quantity']==0 ? 'danger': 'warning'} style={styles.inStock}>{i['quantity']>10 ? 'In Stock': i['quantity']==0 ? 'Out Of Stock': 'Few left in Stock'}</Text>
