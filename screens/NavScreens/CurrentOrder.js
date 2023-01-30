@@ -32,7 +32,7 @@ export default (props) => {
                     total = total+(prices[i]*cart[cartItems[i]['itemId']])
                     return(
                             <View style={styles.cartItem}>
-                                <Image source={{uri: `http://156.67.219.185:8002/api/getFile?uri=${cartItems[i]['itemImage']}`}} style={styles.image} />
+                                <Image source={{uri: `http://156.67.219.185:8000/api/getFile?uri=${cartItems[i]['itemImage']}`}} style={styles.image} />
                                 <View style={{flexGrow: 1}}>
                                     <Text style={{fontWeight: '700', fontSize: 15.5}}>{cartItems[i]['itemName']}</Text>
                                     <Text style={{fontWeight: '700', fontSize: 12, color: '#666'}}>{"$"+prices[i]+ " x "+cart[cartItems[i]['itemId']]}</Text>

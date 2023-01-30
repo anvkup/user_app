@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "user_app",
-    "slug": "user_app",
+    "slug": "vegies-user-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,15 +24,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.vishal1230.vegiesuserapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "2b8b0286-b6b5-4423-a313-360cdb23e854"
+        "projectId": "266750fa-3731-4231-8a48-cd7beaed5126"
       }
-    }
+    },
+    "owner": "vishal-1230"
   }
 }

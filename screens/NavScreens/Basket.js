@@ -11,7 +11,7 @@ export default function Basket({navigator}){
                 <Text style={{fontWeight: '700', fontSize: 12}}>Basket 1</Text>
                 <Text style={{fontSize: 13, fontWeight: '600', marginBottom: 5}}>Regular Vegetables</Text>
                 <View style={styles.singleItem}>
-                    <Image style={styles.image} source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/potato.png')} />
+                    <Image style={styles.image} source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/potato.png'} />
                     {/* <View> */}
                         <Text style={styles.itemName}>Potato</Text>
                         <Text style={styles.itemName}>5 kg</Text>
@@ -19,7 +19,7 @@ export default function Basket({navigator}){
                     <Text style={styles.price}>$ 8 per/kg</Text>
                 </View>
                 <View style={styles.singleItem}>
-                    <Image style={styles.image} source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png')} />
+                    <Image style={styles.image} source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/tomato.png'} />
                     {/* <View> */}
                         <Text style={styles.itemName}>Tomato</Text>
                         <Text style={styles.itemName}>2 kg</Text>
@@ -27,7 +27,7 @@ export default function Basket({navigator}){
                     <Text style={styles.price}>$ 50 per/kg</Text>
                 </View>
                 <View style={styles.singleItem}>
-                    <Image style={styles.image} source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/broccoli.png')} />
+                    <Image style={styles.image} source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/broccoli.png'} />
                     {/* <View> */}
                         <Text style={styles.itemName}>Corriander</Text>
                         <Text style={styles.itemName}>1 kg</Text>
@@ -35,7 +35,7 @@ export default function Basket({navigator}){
                     <Text style={styles.price}>$ 60 per/kg</Text>
                 </View>
                 <View style={styles.singleItem}>
-                    <Image style={styles.image} source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/carrot.png')} />
+                    <Image style={styles.image} source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/carrot.png'} />
                     {/* <View> */}
                         <Text style={styles.itemName}>Carrot</Text>
                         <Text style={styles.itemName}>5 kg</Text>
@@ -48,7 +48,7 @@ export default function Basket({navigator}){
                 <Text style={{fontWeight: '700', fontSize: 12}}>Basket 2</Text>
                 <Text style={{fontSize: 13, fontWeight: '600', marginBottom: 5}}>Fruits</Text>
                 <View style={styles.singleItem}>
-                    <Image style={styles.image} source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/potato.png')} />
+                    <Image style={styles.image} source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/potato.png'} />
                     {/* <View> */}
                         <Text style={styles.itemName}>Potato</Text>
                         <Text style={styles.itemName}>5 kg</Text>
@@ -56,7 +56,7 @@ export default function Basket({navigator}){
                     <Text style={styles.price}>$ 8 per/kg</Text>
                 </View>
                 <View style={styles.singleItem}>
-                    <Image style={styles.image} source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png')} />
+                    <Image style={styles.image} source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/tomato.png'} />
                     {/* <View> */}
                         <Text style={styles.itemName}>Tomato</Text>
                         <Text style={styles.itemName}>2 kg</Text>
@@ -64,7 +64,7 @@ export default function Basket({navigator}){
                     <Text style={styles.price}>$ 50 per/kg</Text>
                 </View>
                 <View style={styles.singleItem}>
-                    <Image style={styles.image} source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/broccoli.png')} />
+                    <Image style={styles.image} source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/broccoli.png'} />
                     {/* <View> */}
                         <Text style={styles.itemName}>Corriander</Text>
                         <Text style={styles.itemName}>1 kg</Text>
@@ -72,7 +72,7 @@ export default function Basket({navigator}){
                     <Text style={styles.price}>$ 60 per/kg</Text>
                 </View>
                 <View style={styles.singleItem}>
-                    <Image style={styles.image} source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/carrot.png')} />
+                    <Image style={styles.image} source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/carrot.png'} />
                     {/* <View> */}
                         <Text style={styles.itemName}>Carrot</Text>
                         <Text style={styles.itemName}>5 kg</Text>

@@ -68,7 +68,7 @@
                     <Counter qty={1} />
                 </Card>
                 <Card style={styles.card} status="primary">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/carrot.png')} style={styles.cardImage} />
+                    <Image source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/carrot.png'} style={styles.cardImage} />
                     <Text style={styles.cardText}>Carrot</Text>
                     <Text style={styles.cardPrice}>$ 20 per/kg</Text>
                     <Text status="primary" style={styles.inStock}>In Stock</Text>
@@ -77,14 +77,14 @@
             </View>
             <View style={styles.twoCardView}>
                 <Card style={styles.card} status="primary">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png')} style={styles.cardImage} />
+                    <Image source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/tomato.png'} style={styles.cardImage} />
                     <Text style={styles.cardText}>Tomato</Text>
                     <Text style={styles.cardPrice}>$ 60 per/kg</Text>
                     <Text status="primary" style={styles.inStock}>In Stock</Text>
                     <Button appearance="outline" style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: '#00bb00' }} />) }} >Add to Cart</Button>
                 </Card>
                 <Card style={styles.card} status="primary">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/cabbage.png')} style={styles.cardImage} />
+                    <Image source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/cabbage.png'} style={styles.cardImage} />
                     <Text style={styles.cardText}>Cabbage</Text>
                     <Text style={styles.cardPrice}>$ 30 per/kg</Text>
                     <Text status="primary" style={styles.inStock}>In Stock</Text>
@@ -93,14 +93,14 @@
             </View>
             <View style={styles.twoCardView}>
                 <Card style={styles.card} status="warning">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/broccoli.png')} style={styles.cardImage} />
+                    <Image source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/broccoli.png'} style={styles.cardImage} />
                     <Text style={styles.cardText}>Broccoli</Text>
                     <Text style={styles.cardPrice}>$ 60 per/kg</Text>
                     <Text status="warning" style={styles.inStock}>Few left Stock</Text>
                     <Button appearance="outline" style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: '#00bb00' }} />) }} >Add to Cart</Button>
                 </Card>
                 <Card style={styles.card} status="warning">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/capsicum.png')} style={styles.cardImage} />
+                    <Image source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/capsicum.png'} style={styles.cardImage} />
                     <Text style={styles.cardText}>Capsicum</Text>
                     <Text style={styles.cardPrice}>$ 50 per/kg</Text>
                     <Text status="warning" style={styles.inStock}>Few left in Stock</Text>
@@ -109,14 +109,14 @@
             </View>
             <View style={styles.twoCardView}>
                 <Card style={styles.card} status="warning">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/potato.png')} style={styles.cardImage} />
+                    <Image source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/potato.png'} style={styles.cardImage} />
                     <Text style={styles.cardText}>Potato</Text>
                     <Text style={styles.cardPrice}>$ 8 per/kg</Text>
                     <Text status="warning" style={styles.inStock}>Few left in Stock</Text>
                     <Button appearance="outline" style={styles.addBtn} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: '#00bb00' }} />) }} >Add to Cart</Button>
                 </Card>
                 <Card style={styles.card} status="danger">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/banana.png')} style={styles.cardImage} />
+                    <Image source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/banana.png'} style={styles.cardImage} />
                     <Text style={styles.cardText}>Banana</Text>
                     <Text style={styles.cardPrice}>$ 70 per/kg</Text>
                     <Text status="danger" style={styles.inStock}>Out of Stock</Text>
@@ -125,7 +125,7 @@
             </View>
             <View style={styles.twoCardView}>
                 <Card style={styles.card} status="danger">
-                    <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/peas.png')} style={styles.cardImage} />
+                    <Image source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/peas.png'} style={styles.cardImage} />
                     <Text style={styles.cardText}>Peas</Text>
                     <Text style={styles.cardPrice}>$ 40 per/kg</Text>
                     <Text status="danger" style={styles.inStock}>Out of Stock</Text>
@@ -149,7 +149,7 @@
         {/* <Counter qty={1} /> */}
                 </Card>
     <Card style={styles.card} status={i[1]['quantity']>10 ? 'primary': i[1]['quantity']==0 ? 'danger': 'warning'}>
-        <Image source={require('/home/tom/Desktop/Projects/user_app-1/assets/vegies/carrot.png')} style={styles.cardImage} />
+        <Image source={'http://156.67.219.185:8000/api/getFile?uri=assets/vegies/carrot.png')} style={styles.cardImage} />
         <Text style={styles.cardText}>{i[1]['itemId']}</Text>
         <Text style={styles.cardPrice}>$ {i[1]['price']} per/kg</Text>
         <Text status={i[1]['quantity']>10 ? 'primary': i[1]['quantity']==0 ? 'danger': 'warning'} style={styles.inStock}>{i[1]['quantity']>10 ? 'In Stock': i[1]['quantity']==0 ? 'Out Of Stock': 'Few left in Stock'}</Text>

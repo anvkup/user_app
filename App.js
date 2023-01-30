@@ -24,6 +24,7 @@ export default function App() {
       {
         loggedIn ? <DashboardNavigator />:<Login />
       }
+      {/* <DashboardNavigator /> */}
     </ApplicationProvider>
   );
 }
