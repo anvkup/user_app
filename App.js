@@ -22,7 +22,7 @@ export default function App() {
   return (
     <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
       {
-        loggedIn ? <DashboardNavigator />:<Login />
+        loggedIn ? <DashboardNavigator />:<Login setLoggedIn={setloggedIn} />
       }
       {/* <DashboardNavigator /> */}
     </ApplicationProvider>

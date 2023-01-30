@@ -5,8 +5,9 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { Svg, SvgUri } from "react-native-svg"
 import { AntDesign } from "@expo/vector-icons"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useNavigation } from "@react-navigation/native"
 
-export default function Login (){
+export default function Login (props){
     
     const [phone, setphone] = useState('')
     const [otp, setotp] = useState('')
@@ -27,6 +28,7 @@ export default function Login (){
         const data = await response.json()
         if (Object.keys(data)[0]!="message"){
             AsyncStorage.setItem('token', data['token'])
+            props.setLoggedIn(true)
         }else{
             ToastAndroid.show('Wrong OTP!', 1000)
             setotp('')
