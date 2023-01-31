@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "user_app",
-    "slug": "vegies-user-app",
+    "slug": "cart-out",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -32,9 +32,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "266750fa-3731-4231-8a48-cd7beaed5126"
+        "projectId": "21754078-7dee-4b9e-9351-215f787241f8"
       }
     },
-    "owner": "vishal-1230"
+    "owner": "anvkup"
   }
 }
