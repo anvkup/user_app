@@ -15,7 +15,7 @@ export default function Login (props){
 
     async function onSendOtp() {
         console.log(phone);
-        const response = await fetch(`http://156.67.219.185:8000/api/users/otp?phone=91${phone}`)
+        const response = await fetch(`http://156.67.219.185:8000/api/users/otp?phone=${phone}`)
         const data = await response.json()
         setotpSent(true)
         ToastAndroid.show('OTP Sent Successfully', 1000)
@@ -24,9 +24,12 @@ export default function Login (props){
     
     async function verifyOtp() {
         console.log('checking otp')
-        const response = await fetch(`http://156.67.219.185:8000/api/users/verifyOTP?phone=91${phone}&otp=${otp}`)
+        const response = await fetch(`http://156.67.219.185:8000/api/users/verifyOTP?phone=${phone}&otp=${otp}`)
         const data = await response.json()
         if (Object.keys(data)[0]!="message"){
+            console.log(props.firstTimeUser);
+            props.setfirstTimeUser(true)
+            console.log(props.firstTimeUser);
             AsyncStorage.setItem('token', data['token'])
             props.setLoggedIn(true)
         }else{

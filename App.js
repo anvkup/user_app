@@ -6,12 +6,13 @@ import * as eva from '@eva-design/eva';
 import {default as theme} from './theme.json'
 import Login from './screens/Login';
 import DashboardNavigator from './screens/DashboardNavigator';
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FirstTime from './screens/FirstTime';
 
 export default function App() {
 
   const [loggedIn, setloggedIn] = useState(true)
+  const [firstTimeUser, setfirstTimeUser] = useState(false)
   AsyncStorage.getItem('token', (err, result)=>{
     if (err) throw err;
     else{
@@ -22,7 +23,7 @@ export default function App() {
   return (
     <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
       {
-        loggedIn ? <DashboardNavigator />:<Login setLoggedIn={setloggedIn} />
+        loggedIn ? firstTimeUser ? <FirstTime />:<DashboardNavigator setfirstTimeUser={setfirstTimeUser} />:<Login setLoggedIn={setloggedIn} firstTimeUser={firstTimeUser} setfirstTimeUser={setfirstTimeUser} />
       }
       {/* <DashboardNavigator /> */}
     </ApplicationProvider>

@@ -1,4 +1,5 @@
 import { Feather, FontAwesome5, Fontisto, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button, ButtonGroup, Text } from "@ui-kitten/components";
 import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -22,7 +23,7 @@ export default function Profile({navigation, route}){
                 <Text style={styles.profileOptions} onPress={()=>{navigation.navigate('CustomerSupport')}}>Customer Support & Chat</Text>
                 <Text style={styles.profileOptions} onPress={()=>{navigation.navigate('FAQ')}}>FAQ</Text>
             </ScrollView>
-            <Button status="danger" style={{position: 'absolute', bottom: 10, width: '95%', alignSelf: 'center'}} accessoryRight={()=>{return <MaterialIcons name="logout" style={{fontSize: 17, color: '#FFF'}} />}}>Logout</Button>
+            <Button status="danger" style={{position: 'absolute', bottom: 10, width: '95%', alignSelf: 'center'}} onPress={()=>{AsyncStorage.removeItem('token')}} accessoryRight={()=>{return <MaterialIcons name="logout" style={{fontSize: 17, color: '#FFF'}} />}}>Logout</Button>
         </SafeAreaView>
     )
 }
