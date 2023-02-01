@@ -23,7 +23,7 @@ export default function App() {
   return (
     <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
       {
-        loggedIn ? firstTimeUser ? <FirstTime />:<DashboardNavigator setfirstTimeUser={setfirstTimeUser} />:<Login setLoggedIn={setloggedIn} firstTimeUser={firstTimeUser} setfirstTimeUser={setfirstTimeUser} />
+        loggedIn ? firstTimeUser ? <FirstTime setfirstTimeUser={setfirstTimeUser} />:<DashboardNavigator setfirstTimeUser={setfirstTimeUser} />:<Login setLoggedIn={setloggedIn} firstTimeUser={firstTimeUser} setfirstTimeUser={setfirstTimeUser} />
       }
       {/* <DashboardNavigator /> */}
     </ApplicationProvider>

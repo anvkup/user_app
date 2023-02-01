@@ -26,6 +26,7 @@ export default (props) => {
                 address: address
             })
             })
+            props.setfirstTimeUser(false)
         })
     }
 
