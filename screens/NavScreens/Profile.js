@@ -1,4 +1,5 @@
-import { Feather, FontAwesome5, Fontisto, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button, ButtonGroup, Text } from "@ui-kitten/components";
 import { useEffect } from "react";
@@ -6,28 +7,33 @@ import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Profile({navigation, route}){
+    const [name, setname] = useState('First Last')
+    const [phone, setphone] = useState('9876543210')
+    const [email, setemail] = useState('some.email@gmail.com')
+    const [defaultAddress, setdefaultAddress] = useState('S-144, Some Address, Delhi-110092')
 
-    const [name, setname] = useState('')
-    const [phone, setphone] = useState('')
-    const [email, setemail] = useState('')
-    const [defaultAddress, setdefaultAddress] = useState('')
-
+    console.log('printing info');
     useEffect(()=>{
         AsyncStorage.getItem('token', async (err, result)=>{
-            const response = await fetch(`http://192.168.126.137:8000/api/users/userDetails`, {
-                method: 'get',
-                headers: {
+            if (err) throw err;
+            else{
+
+                const response = await fetch(`http://156.67.219.185:8000/api/users/userDetails`, {
+                    method: 'get',
                     token: result,
-                    'Content-Type':'application/json'
-                }
+                    headers: {
+                        'Content-Type':'application/json'
+                    }
+                })
+                const data = await response.json()
+                console.log(data);
+                setname(data.name)
+                setphone(data.phone)
+                setemail(data.email)
+                setdefaultAddress(data.defaultAddress)
+            }
             })
-            const data = await response.json()
-            setname(data.name)
-            setphone(data.phone)
-            setemail(data.email)
-            setdefaultAddress(data.defaultAddress)
-        })
-    }, [])
+    })
 
     return(
         <SafeAreaView style={{height: '100%', width: '100%'}}>

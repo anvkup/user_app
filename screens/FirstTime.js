@@ -14,7 +14,7 @@ export default (props) => {
     function onSubmit() {
         AsyncStorage.getItem('token', async (err, result)=>{
             console.log(result);
-            await fetch('http://192.168.126.137:8000/api/users/createUser', {
+            await fetch('http://156.67.219.185:8000/api/users/createUser', {
                 method: 'post',
             headers: {
                 token: result,

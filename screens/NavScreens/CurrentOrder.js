@@ -2,10 +2,11 @@ import { AntDesign, Feather } from "@expo/vector-icons"
 import { useState } from "react"
 import { useRoute } from "@react-navigation/native"
 import { Button, Card, Text } from "@ui-kitten/components"
-import { View, Image, StyleSheet, Alert, ScrollView } from "react-native"
+import { View, Image, StyleSheet, Alert, ScrollView, ToastAndroid } from "react-native"
 import prompt from "react-native-prompt-android"
 import DialogContainer from "react-native-dialog/lib/Container"
 import { SafeAreaView } from "react-native-safe-area-context"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export default (props) => {
 
@@ -15,6 +16,27 @@ export default (props) => {
     const prices = route.params.prices
 
     let total=0;
+
+    function placeOrder (){
+        AsyncStorage.getItem('token', async (err, result)=>{
+            await fetch('http://156.67.219.185:8000/api/users/order', {
+                method: 'post',
+                headers:{
+                    token: result,
+                    'Content-Type': 'application/json'
+                },
+                body:{
+                    cart: cart
+                }
+            }, (err)=>{
+                if(err) throw err;
+                else{
+                    ToastAndroid.show('Order placed successfully', 1000)
+                }
+            })
+            console.log('ordered');
+        })
+    }
 
     return (
         <ScrollView>
@@ -58,7 +80,7 @@ export default (props) => {
                     <Text style={{fontWeight: '700'}}>Amount to be Paid :</Text>
                     <Text style={{fontWeight: '700'}}>${total-10}</Text>
                 </View>
-                <Button style={{marginHorizontal: 15, marginTop: 15, marginBottom: 15, elevation: 2}}>Place Order (COD)</Button>
+                <Button style={{marginHorizontal: 15, marginTop: 15, marginBottom: 15, elevation: 2}} onPress={placeOrder}>Place Order (COD)</Button>
         </ScrollView>
     )
 }
