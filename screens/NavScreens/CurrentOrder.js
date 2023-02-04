@@ -19,21 +19,17 @@ export default (props) => {
 
     function placeOrder (){
         AsyncStorage.getItem('token', async (err, result)=>{
-            await fetch('http://156.67.219.185:8000/api/users/order', {
+            const response = await fetch('http://192.168.0.5:8000/api/users/order', {
                 method: 'post',
                 headers:{
                     token: result,
                     'Content-Type': 'application/json'
                 },
-                body:{
+                body:JSON.stringify({
                     cart: cart
-                }
-            }, (err)=>{
-                if(err) throw err;
-                else{
-                    ToastAndroid.show('Order placed successfully', 1000)
-                }
+                })
             })
+            const data = await response.json()
             console.log('ordered');
         })
     }
