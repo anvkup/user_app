@@ -37,7 +37,7 @@ export default function Profile({navigation, route}){
     return(
         <SafeAreaView style={{height: '100%', width: '100%'}}>
             <View style={{display: 'flex', maxWidth: '100%', flexDirection: 'column', alignItems: 'center', paddingHorizontal: 10, alignItems: 'center'}}>
-                <Ionicons name="person-sharp" style={{color: '#000',fontSize: 60, borderRadius: 50, marginHorizontal: 8, marginBottom: 8}} />
+                <Ionicons name="person-sharp" onPress={navigation.navigate('First Time')} style={{color: '#000',fontSize: 60, borderRadius: 50, marginHorizontal: 8, marginBottom: 8}} />
                 {/* <View style={{textAlign: 'center', flexGrow: 1, paddingHorizontal: 10, right: 0, flexWrap: 'wrap'}}> */}
                     <Text style={{fontWeight: '800', fontSize: 19}}>{name}</Text>
                     <Text style={{fontWeight: '700', fontSize: 13}}>+91 {phone}</Text>

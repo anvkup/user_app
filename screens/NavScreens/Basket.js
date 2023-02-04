@@ -1,11 +1,12 @@
-import { Fontisto, SimpleLineIcons } from "@expo/vector-icons";
+import { Fontisto, MaterialCommunityIcons, SimpleLineIcons } from "@expo/vector-icons";
 import { Button, Card, Text } from "@ui-kitten/components";
 import { View, Image, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Basket({navigator}){
     return(
-        // <SafeAreaView>
+        <View>
+            <MaterialCommunityIcons name="basket-plus" style={{fontSize: 28, color: 'white', padding: 16, zIndex: 100, position: 'absolute', bottom: 20, elevation: 5, right: 20, backgroundColor: '#1C6758', borderRadius: 30}} />
         <ScrollView>
             <Card style={{marginTop: 6, borderRadius: 5}}>
                 <Text style={{fontWeight: '700', fontSize: 12}}>Basket 1</Text>
@@ -82,7 +83,7 @@ export default function Basket({navigator}){
                 <Button appearance="filled" style={{marginTop: 10, marginBottom:7}} accessoryLeft={()=>{return(<Fontisto name="shopping-basket-add" style={{color: 'white', fontSize: 16}} />)}}>Add To Cart Directly</Button>
             </Card>
         </ScrollView>
-        // </SafeAreaView>
+        </View>
     )
 }
 
