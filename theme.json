@@ -43,5 +43,9 @@
   "color-danger-600": "#B32634",
   "color-danger-700": "#961A31",
   "color-danger-800": "#79102D",
-  "color-danger-900": "#64092A"
+  "color-danger-900": "#64092A",
+  "primary-green": "#1C6758",
+  "primary-light-green": "#1C6758",
+  "primary-light-vanilla": "#1C6758",
+  "primary-grey": "#1C6758"
 }
