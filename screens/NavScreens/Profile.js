@@ -17,7 +17,6 @@ export default function Profile({navigation, route}){
         AsyncStorage.getItem('token', async (err, result)=>{
             if (err) throw err;
             else{
-
                 const response = await fetch(`http://156.67.219.185:8000/api/users/userDetails`, {
                     method: 'get',
                     token: result,
@@ -32,7 +31,7 @@ export default function Profile({navigation, route}){
                 setemail(data.email)
                 setdefaultAddress(data.defaultAddress)
             }
-            })
+        })
     })
 
     return(
@@ -57,6 +56,8 @@ export default function Profile({navigation, route}){
         </SafeAreaView>
     )
 }
+
+
 
 const styles = StyleSheet.create({
     profileOptions:{
