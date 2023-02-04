@@ -25,7 +25,7 @@ export default (props) => {
                 email: email,
                 address: address
             })
-            })
+        })
             props.setfirstTimeUser(false)
         })
     }
