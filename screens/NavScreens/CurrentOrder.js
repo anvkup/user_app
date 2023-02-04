@@ -19,7 +19,7 @@ export default (props) => {
 
     function placeOrder (){
         AsyncStorage.getItem('token', async (err, result)=>{
-            const response = await fetch('http://192.168.0.5:8000/api/users/order', {
+            const response = await fetch('http://156.67.219.185:8000/api/users/order', {
                 method: 'post',
                 headers:{
                     token: result,

@@ -19,8 +19,8 @@ export default function Profile({navigation, route}){
             else{
                 const response = await fetch(`http://156.67.219.185:8000/api/users/userDetails`, {
                     method: 'get',
-                    token: result,
                     headers: {
+                        token: result,
                         'Content-Type':'application/json'
                     }
                 })
@@ -32,7 +32,7 @@ export default function Profile({navigation, route}){
                 setdefaultAddress(data.defaultAddress)
             }
         })
-    })
+    }, [])
 
     return(
         <SafeAreaView style={{height: '100%', width: '100%'}}>
