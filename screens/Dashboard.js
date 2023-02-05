@@ -22,17 +22,17 @@ export default function Dashboard(props, {navigation, route}){
                 tabBarLabel: 'Home', 
                 tabBarIcon: ({focused, color})=>{return <AntDesign style={{fontSize: 22, color: focused ? '#3D8361':'#000'}} name="home" />}, 
                 headerLeftContainerStyle: {padding: 5}, 
-                headerTitle: "Fresh Vegies", 
+                headerTitle: "Cartout", 
                 headerRight:()=>{return <Feather name="search" style={{fontSize: 23}} onPress={()=>{setshowSearchInput(true)}} />}, 
                 headerRightContainerStyle:{paddingRight: 14}, 
                 headerShown: true, 
                 headerStyle:{height: 80, shadowColor: '#000', elevation: 6}, 
-                header: ()=>{return(<SafeAreaView><Input placeholder="Search A Vegie" accessoryRight={()=>{return(<Entypo name="cross" style={{fontSize: 22, color: '#666'}} onPress={()=>{setshowSearchInput(false)}} />)}} style={{padding: 10, height: 50}} /></SafeAreaView>)}
+                header: ()=>{return(<SafeAreaView><Input placeholder="Enter Product Name" accessoryRight={()=>{return(<Entypo name="cross" style={{fontSize: 22, color: '#666'}} onPress={()=>{setshowSearchInput(false)}} />)}} style={{padding: 10, height: 50}} /></SafeAreaView>)}
                 }:{
                     tabBarLabel: 'Home',
                     tabBarIcon: ({focused, color})=>{return <AntDesign style={{fontSize: 22, color: focused ? '#3D8361':'#000'}} name="home" />}, 
                     headerLeftContainerStyle: {padding: 5},
-                    headerTitle: "Fresh Vegies", 
+                    headerTitle: "Cartout", 
                     headerRight:()=>{return <Feather name="search" style={{fontSize: 23}} onPress={()=>{setshowSearchInput(true)}} />}, 
                     headerRightContainerStyle:{paddingRight: 14}, 
                     headerShown: true, 
