@@ -21,7 +21,7 @@ export default function Cart(props){
     useEffect(() => {
         
         async function getItems() {
-            const response = await fetch(`http://194.113.72.239:80/api/users/getItems`)
+            const response = await fetch(`http://20.193.147.19:80/api/users/getItems`)
             const data = await response.json()
 
             let obj={}
@@ -37,7 +37,7 @@ export default function Cart(props){
             // console.log(itemsList);
             let newObj={}
             await Promise.all(Object.keys(props.cart).map(async(i)=>{
-                const response2 = await fetch(`http://194.113.72.239:80/api/items/getItemDetails?itemId=${i}`)
+                const response2 = await fetch(`http://20.193.147.19:80/api/items/getItemDetails?itemId=${i}`)
                 const data2 = await response2.json()
                 // console.log(data2);
 

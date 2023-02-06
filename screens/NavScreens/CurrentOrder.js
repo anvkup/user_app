@@ -19,7 +19,7 @@ export default (props) => {
 
     function placeOrder (){
         AsyncStorage.getItem('token', async (err, result)=>{
-            const response = await fetch('http://194.113.72.239:80/api/users/order', {
+            const response = await fetch('http://20.193.147.19:80/api/users/order', {
                 method: 'post',
                 headers:{
                     token: result,
@@ -50,7 +50,7 @@ export default (props) => {
                     total = total+(prices[i]*cart[cartItems[i]['itemId']])
                     return(
                             <View style={styles.cartItem}>
-                                <Image source={{uri: `http://194.113.72.239:80/api/getFile?uri=${cartItems[i]['itemImage']}`}} style={styles.image} />
+                                <Image source={{uri: `http://20.193.147.19:80/api/getFile?uri=${cartItems[i]['itemImage']}`}} style={styles.image} />
                                 <View style={{flexGrow: 1}}>
                                     <Text style={{fontWeight: '700', fontSize: 15.5}}>{cartItems[i]['itemName']}</Text>
                                     <Text style={{fontWeight: '700', fontSize: 12, color: '#666'}}>{"$"+prices[i]+ " x "+cart[cartItems[i]['itemId']]}</Text>

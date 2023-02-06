@@ -15,7 +15,7 @@ export default function Login (props){
 
     async function onSendOtp() {
         console.log(phone);
-        const response = await fetch(`http://194.113.72.239:80/api/users/otp?phone=${phone}`)
+        const response = await fetch(`http://20.193.147.19:80/api/users/otp?phone=${phone}`)
         const data = await response.json()
         setotpSent(true)
         ToastAndroid.show('OTP Sent Successfully', 1000)
@@ -24,7 +24,7 @@ export default function Login (props){
     
     async function verifyOtp() {
         console.log('checking otp')
-        const response = await fetch(`http://194.113.72.239:80/api/users/verifyOTP?phone=${phone}&otp=${otp}`)
+        const response = await fetch(`http://20.193.147.19:80/api/users/verifyOTP?phone=${phone}&otp=${otp}`)
         const data = await response.json()
         if (Object.keys(data)[0]!="message"){
             console.log(props.firstTimeUser);
