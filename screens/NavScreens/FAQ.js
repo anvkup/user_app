@@ -14,10 +14,6 @@ export default function FAQ() {
             console.log('converting to json');
             const data = await response.json()
             console.log("FAQ DATA=", data);
-            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     
             setfaqs(data)
             setfaqsLoaded(true)

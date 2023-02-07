@@ -28,7 +28,7 @@ export default function Login (props){
         const data = await response.json()
         if (Object.keys(data)[0]!="message"){
             console.log(props.firstTimeUser);
-            props.setfirstTimeUser(true)
+            props.setfirstTimeUser(data['firstTimeUser'])
             console.log(props.firstTimeUser);
             AsyncStorage.setItem('token', data['token'])
             props.setLoggedIn(true)

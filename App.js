@@ -13,6 +13,7 @@ export default function App() {
 
   const [loggedIn, setloggedIn] = useState(true)
   const [firstTimeUser, setfirstTimeUser] = useState(false)
+  AsyncStorage.getAllKeys((err, data)=>{if(err) throw err; console.log("Async==>",data);})
   AsyncStorage.getItem('token', (err, result)=>{
     if (err) throw err;
     else{
@@ -22,10 +23,10 @@ export default function App() {
 
   return (
     <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
-      {/* {
+      {
         loggedIn ? firstTimeUser ? <FirstTime setfirstTimeUser={setfirstTimeUser} />:<DashboardNavigator setfirstTimeUser={setfirstTimeUser} />:<Login setLoggedIn={setloggedIn} firstTimeUser={firstTimeUser} setfirstTimeUser={setfirstTimeUser} />
-      } */}
-      <DashboardNavigator />
+      }
+      {/* <DashboardNavigator /> */}
     </ApplicationProvider>
   );
 }
