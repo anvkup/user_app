@@ -17,7 +17,7 @@ export default function Profile({navigation, route}){
         AsyncStorage.getItem('token', async (err, result)=>{
             if (err) throw err;
             else{
-                const response = await fetch(`http://194.113.72.239:80/api/users/userDetails`, {
+                const response = await fetch(`http://20.193.147.19:80/api/users/userDetails`, {
                     method: 'get',
                     headers: {
                         token: result,
