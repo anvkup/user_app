@@ -9,7 +9,7 @@ export default function FAQ() {
 
     useEffect(()=>{
         async function a(){
-            const response = await fetch(`http://192.168.0.5:8000/api/users/faq`)
+            const response = await fetch(`http://20.193.147.19:80/api/users/faq`)
             console.log(response);
             console.log('converting to json');
             const data = await response.json()
