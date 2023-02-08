@@ -1,8 +1,9 @@
 import { View, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { Text, Card } from "@ui-kitten/components";
+import { Text, Card, Button } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Order({navigation ,route}){
 
@@ -14,59 +15,63 @@ export default function Order({navigation ,route}){
 
     let total=0;
 
+    const [order, setorder] = useState('')
+    const [orderLoaded, setorderLoaded] = useState(false)
+    const [userInfo, setuserInfo] = useState('')
 
     useEffect(() => {
-        
-        async function getItems() {
-            const response = await fetch(`http://20.193.147.19:80/api/users/getItems`)
+        AsyncStorage.getItem('token', (err, result)=>{
+
+            async function getItems() {
+                const response = await fetch(`http://192.168.0.6:8000/api/users/getOrder?orderId=${route.params.orderId}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    token: result
+                }
+            })
             const data = await response.json()
+            
+            console.log(data);
+            setorder(data)
+            
+            // const response = await fetch(`http://20.193.147.19:80/api/users/getItems`)
+            // const data = await response.json()
 
-            let obj={}
-        //     data.map((i)=>{
-        // async function getItems() {
-        //     const response = await fetch(`http://20.193.147.19:80/api/users/getItems`)
-        //     const data = await response.json()
+            // let obj={}
+            // data.map((i)=>{
+            //     obj[i['itemId']]=i['price']
+            //     // setprices({...prices, obj})
+            //     console.log("new prices=>", prices)
+            // })
+            // setprices(obj)
 
-        // async function getItems() {
-        //     const response = await fetch(`http://20.193.147.19:80/api/users/getItems`)
-        //     const data = await response.json()
+            // // console.log(data);
+            // // setitemsList(data)
+            // // console.log(itemsList);
+            // let newObj={}
+            // await Promise.all(Object.keys(props.cart).map(async(i)=>{
+            //     const response2 = await fetch(`http://20.193.147.19:80/api/items/getItemDetails?itemId=${i}`)
+            //     const data2 = await response2.json()
+            //     // console.log(data2);
 
-        // async function getItems() {
-        //     const response = await fetch(`http://20.193.147.19:80/api/users/getItems`)
-        //     const data = await response.json()
-
-        //         obj[i['itemId']]=i['price']
-        //         // setprices({...prices, obj})
-        //         console.log("new prices=>", prices)
-        //     })
-        //     setprices(obj)
-
-        //     // console.log(data);
-        //     // setitemsList(data)
-        //     // console.log(itemsList);
-        //     let newObj={}
-        //     await Promise.all(Object.keys(props.cart).map(async(i)=>{
-        //         const response2 = await fetch(`http://20.193.147.19:80/api/items/getItemDetails?itemId=${i}`)
-        //         const data2 = await response2.json()
-        //         // console.log(data2);
-
-        //         newObj[i]=data2
-        //     }))
-        //     console.log(newObj)
-        //     setcartItems(newObj)
-        //     setdetailsLoaded(true)
+            //     newObj[i]=data2
+            // }))
+            // console.log(newObj)
+            // setcartItems(newObj)
+            // setdetailsLoaded(tru
         }
-        // getItems()
-        // console.log("CI", cartItems);
+        getItems()
+    })
     }, [])
 
     return (
-        <View>
+        orderLoaded ? 
+        <View style={{height: '100%'}}>
             <View style={{padding: 15, paddingHorizontal: 20, backgroundColor: 'white', borderBottomWidth: 0.8, borderBottomColor: '#777'}}>
             <Text style={{fontWeight: '700', fontSize: 16}}>Luv Verma</Text>
-            <Text style={{fontSize: 12, fontWeight: '700'}}>Phone: +91 9549982610</Text>
+            <Text style={{fontSize: 12, fontWeight: '700'}}>Phone: +91 {order['orderedBy']}</Text>
             <View style={{fontSize: 12, fontWeight: '700', justifyContent: 'space-between', display: 'flex', flexDirection: 'row'}}>
-                <Text style={{fontSize: 12, fontWeight: '700'}}>Address: D-138, 2F, West Vinod Nagar Delhi - 110092</Text>
+                <Text style={{fontSize: 12, fontWeight: '700'}}>Address: {data['address']}</Text>
                 <Feather name="edit" size={14} style={{fontWeight: '800'}} onPress={()=>{alert('Address Editing to be Added')}} />
             </View>
             </View>
@@ -102,7 +107,11 @@ export default function Order({navigation ,route}){
                     <Text style={{fontWeight: '700'}}>Amount to be Paid :</Text>
                     <Text style={{fontWeight: '700'}}>${total-10}</Text>
                 </View>
-        </View>
+                <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', position: 'absolute', bottom: 20}}>
+                    <Button style={{marginHorizontal: 10, flexGrow: 1}}>Call Delivery Boy</Button>
+                    <Button style={{marginHorizontal: 10, flexGrow: 1}}>&#x2716;   Cancel Order</Button>
+                </View>
+        </View>:''
     )
 }
 
