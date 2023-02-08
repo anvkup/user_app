@@ -6,6 +6,7 @@ import CurrentOrder from "./NavScreens/CurrentOrder";
 import CustomerSupport from "./NavScreens/CustomerSupport";
 import FAQ from "./NavScreens/FAQ";
 import Notifications from "./NavScreens/Notifcations";
+import Order from "./NavScreens/Order";
 import Orders from "./NavScreens/Orders";
 import Settings from "./NavScreens/Settings";
 
@@ -24,6 +25,7 @@ export default function DashboardNavigator(){
                 <Stack.Screen name="CustomerSupport" component={CustomerSupport} options={{headerTitle: "Customer Support"}} />
                 <Stack.Screen name="FAQ" component={FAQ} options={{headerTitle: "FAQ"}} />
                 <Stack.Screen name="Current Order" children={()=>{return <CurrentOrder cart={cart} setcart={setcart} />}} options={{headerTitle: "Current Order"}} />
+                <Stack.Screen name="Order" component={Order} />
             </Stack.Navigator>
         </NavigationContainer>
     )
