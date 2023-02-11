@@ -7,6 +7,7 @@ export default function Orders({navigation}){
 
     const [currentOrder, setcurrentOrder] = useState([])
     const [pastOrders, setpastOrders] = useState(0)
+    const [ordersLoaded, setordersLoaded] = useState(false)
 
     useEffect(()=>{
         AsyncStorage.getItem('token', async (err, result)=>{
@@ -20,6 +21,7 @@ export default function Orders({navigation}){
             const data = await response.json()
             setcurrentOrder(data['currentOrder'])
             setpastOrders(data['pastOrders'])
+            setordersLoaded(true)
             console.log(data);
         })
     }, [])

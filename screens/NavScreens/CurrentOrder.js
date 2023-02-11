@@ -1,6 +1,6 @@
 import { AntDesign, Feather } from "@expo/vector-icons"
 import { useState } from "react"
-import { useRoute } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { Button, Card, Text } from "@ui-kitten/components"
 import { View, Image, StyleSheet, Alert, ScrollView, ToastAndroid } from "react-native"
 import prompt from "react-native-prompt-android"
@@ -11,6 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 export default (props) => {
 
     const route = useRoute()
+    const navigator = useNavigation()
     const cart = route.params.cart
     const cartItems = route.params.cartItems
     const prices = route.params.prices
@@ -33,6 +34,7 @@ export default (props) => {
             console.log('ordered');
             const data = await response.json()
             ToastAndroid.show('Ordered Successfully', 1000)
+            navigator.navigate('Order', {orderId: data['orderId']})
         })
     }
 
