@@ -150,8 +150,9 @@ export default function Order({navigation ,route}){
                 <Card style={{paddingBottom: 10}}>
                     <Text style={{fontWeight: '700', fontSize: 14, marginBottom: 20, marginTop: 5}}>Order Status</Text>
                     <StepIndicator
-                    currentPosition={order['status']}
+                    currentPosition={1}
                     stepCount={3}
+                    customStyles={{stepIndicatorUnFinishedColor: '#e4e4e4', separatorUnFinishedColor: '#e4e4e4'}}
                     renderStepIndicator={({position, stepStatus})=>{if (stepStatus==="finished"){return <FontAwesome5 name='check' style={{color: 'white', fontSize: 13}} />}else{return (<Text style={{fontSize: 13, color: '#949494'}}>{position+1}</Text>)}}}
                     labels={['Ordered', 'Out for Delivery', 'Delivered']} />
                     <Text style={{fontWeight: '700', fontSize: 11, marginTop: 10, marginHorizontal: 5}}>Order OTP: {order['otp']}</Text>
