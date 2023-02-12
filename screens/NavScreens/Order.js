@@ -1,5 +1,5 @@
 import { View, Image, ScrollView } from "react-native";
-import { Entypo, Feather, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { Entypo, Feather, FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Text, Card, Button } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
@@ -24,7 +24,7 @@ export default function Order({navigation ,route}){
     useEffect(() => {
         AsyncStorage.getItem('token', (err, result)=>{
             async function getItems() {
-                const response = await fetch(`http://192.168.0.6:8000/api/users/getOrder?orderId=${route.params.orderId}`, {
+                const response = await fetch(`http://20.193.147.19:80/api/users/getOrder?orderId=${route.params.orderId}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         token: result
@@ -33,7 +33,7 @@ export default function Order({navigation ,route}){
                 const data = await response.json()
                 console.log("DATA=", data);
                 
-                const response2 = await fetch(`http://192.168.0.6:8000/api/users/getItems`, {
+                const response2 = await fetch(`http://20.193.147.19:80/api/users/getItems`, {
                     method: 'get',
                     headers: {
                         'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export default function Order({navigation ,route}){
                 let obj3= {}
                 await Promise.all(data['items'].map(async(i)=>{
                     console.log('i=', i);
-                    const response3 = await fetch(`http://192.168.0.6:8000/api/items/getItemDetails?itemId=${i['itemId']}`)
+                    const response3 = await fetch(`http://20.193.147.19:80/api/items/getItemDetails?itemId=${i['itemId']}`)
                     const data3 = await response3.json()
                     console.log('data3=', data3);
                 
@@ -147,10 +147,10 @@ export default function Order({navigation ,route}){
                     <Text style={{fontWeight: '700'}}>${total-10}</Text>
                 </View>
                 </Card>
-                <Card style={{paddingBottom: 10}}>
-                    <Text style={{fontWeight: '700', fontSize: 14, marginBottom: 20, marginTop: 5}}>Order Status</Text>
+                <Card style={{paddingBottom: 12}}>
+                    <Text style={{fontWeight: '700', fontSize: 14, marginBottom: 20, marginTop: 10}}>Order Status</Text>
                     <StepIndicator
-                    currentPosition={1}
+                    currentPosition={order['status']}
                     stepCount={3}
                     customStyles={{stepIndicatorUnFinishedColor: '#e4e4e4', separatorUnFinishedColor: '#e4e4e4'}}
                     renderStepIndicator={({position, stepStatus})=>{if (stepStatus==="finished"){return <FontAwesome5 name='check' style={{color: 'white', fontSize: 13}} />}else{return (<Text style={{fontSize: 13, color: '#949494'}}>{position+1}</Text>)}}}
@@ -161,8 +161,8 @@ export default function Order({navigation ,route}){
                 {
                     order['status']==0 &&
                 <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 20, marginBottom: 20}}>
-                    <Button style={{marginHorizontal: 10, flexGrow: 1, elevation: 4}}>Call Delivery Boy</Button>
-                    <Button style={{marginHorizontal: 10, flexGrow: 1, elevation: 4}}>&#x2716;   Cancel Order</Button>
+                    <Button style={{marginHorizontal: 10, marginRight: 5, flexGrow: 1, elevation: 4}}><Ionicons name='md-call-sharp' style={{fontSize: 15, marginTop: 5}} />   Call Delivery Boy</Button>
+                    <Button status='danger' style={{marginHorizontal: 10, marginLeft: 5, flexGrow: 1}}>&#x2716;   Cancel Order</Button>
                 </View>
                 }
         </ScrollView>:<View>

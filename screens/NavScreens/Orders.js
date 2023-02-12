@@ -5,13 +5,12 @@ import { useEffect, useState } from "react";
 
 export default function Orders({navigation}){
 
-    const [currentOrder, setcurrentOrder] = useState([])
-    const [pastOrders, setpastOrders] = useState(0)
-    const [ordersLoaded, setordersLoaded] = useState(false)
+    const [currentOrders, setcurrentOrders] = useState([])
+    const [pastOrders, setpastOrders] = useState([])
 
     useEffect(()=>{
         AsyncStorage.getItem('token', async (err, result)=>{
-            const response = await fetch("http://192.168.0.6:8000/api/users/getOrders", {
+            const response = await fetch("http://20.193.147.19:80/api/users/getOrders", {
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json',
@@ -19,7 +18,7 @@ export default function Orders({navigation}){
                 }
             })
             const data = await response.json()
-            setcurrentOrder(data['currentOrder'])
+            setcurrentOrders(data['currentOrders'])
             setpastOrders(data['pastOrders'])
             setordersLoaded(true)
             console.log(data);
@@ -29,12 +28,18 @@ export default function Orders({navigation}){
     return(
         <View>
             <Text style={{fontWeight: '700', fontSize: 14, paddingVertical: 9, paddingLeft: 14}}>Current Order</Text>
-            <Card onPress={()=>{navigation.navigate('Order', {orderId: Object.keys(currentOrder)[0]})}}><Text>{Object.keys(currentOrder)[0]}</Text></Card>
+            {
+                currentOrders.length != 0 ? currentOrders.map((i)=>{
+                    return <Card onPress={()=>{navigation.navigate('Order', {orderId: Object.keys(i)[0]})}}><Text>Order No.: #{Object.keys(i)[0]}</Text></Card>
+                }):<Card><Text style={{color: '#a4a4a4'}}>No Orders in Progress :(</Text></Card>
+            } 
             <Text style={{fontWeight: '700', fontSize: 14, paddingVertical: 9, paddingLeft: 14}}>Past Orders</Text>
             <ScrollView>
-                <Card><Text>1</Text></Card>
-                <Card><Text>2</Text></Card>
-                <Card><Text>3</Text></Card>
+                {
+                    pastOrders.length != 0 ? pastOrders.map((i)=>{
+                        return <Card><Text>Order ID: #{i}</Text></Card>
+                    }):<Card><Text style={{color: '#a4a4a4'}}>No Past Orders :(</Text></Card>
+                }
             </ScrollView>
         </View>
     )
