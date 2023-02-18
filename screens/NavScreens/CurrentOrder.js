@@ -1,5 +1,5 @@
 import { AntDesign, Feather } from "@expo/vector-icons"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { Button, Card, Text } from "@ui-kitten/components"
 import { View, Image, StyleSheet, Alert, ScrollView, ToastAndroid } from "react-native"
@@ -38,13 +38,40 @@ export default (props) => {
         })
     }
 
+    const [name, setname] = useState('First Last')
+    const [phone, setphone] = useState('9876543210')
+    const [email, setemail] = useState('some.email@gmail.com')
+    const [defaultAddress, setdefaultAddress] = useState('S-144, Some Address, Delhi-110092')
+
+    console.log('printing info');
+    useEffect(()=>{
+        AsyncStorage.getItem('token', async (err, result)=>{
+            if (err) throw err;
+            else{
+                const response = await fetch(`http://20.193.147.19:80/api/users/userDetails`, {
+                    method: 'get',
+                    headers: {
+                        token: result,
+                        'Content-Type':'application/json'
+                    }
+                })
+                const data = await response.json()
+                console.log("PData=", data);
+                setname(data.name)
+                setphone(data.phone)
+                setemail(data.email)
+                setdefaultAddress(data.defaultAddress)
+            }
+        })
+    })
+
     return (
         <ScrollView>
             <View style={{padding: 15, paddingHorizontal: 20, backgroundColor: 'white', borderBottomWidth: 0.8, borderBottomColor: '#777'}}>
-            <Text style={{fontWeight: '700', fontSize: 16}}>Luv Verma</Text>
-            <Text style={{fontSize: 12, fontWeight: '700'}}>Phone: +91 9549982610</Text>
+            <Text style={{fontWeight: '700', fontSize: 16}}>{name}</Text>
+            <Text style={{fontSize: 12, fontWeight: '700'}}>Phone: +91 {phone}</Text>
             <View style={{fontSize: 12, fontWeight: '700', justifyContent: 'space-between', display: 'flex', flexDirection: 'row'}}>
-                <Text style={{fontSize: 12, fontWeight: '700'}}>Address: D-138, 2F, West Vinod Nagar Delhi - 110092</Text>
+                <Text style={{fontSize: 12, fontWeight: '700'}}>Address: {defaultAddress}</Text>
                 <Feather name="edit" size={14} style={{fontWeight: '800'}} onPress={()=>{alert('Address Editing to be Added')}} />
             </View>
             </View>
@@ -57,7 +84,7 @@ export default (props) => {
                                 <Image source={{uri: `http://20.193.147.19:80/api/getFile?uri=${cartItems[i]['itemImage']}`}} style={styles.image} />
                                 <View style={{flexGrow: 1}}>
                                     <Text style={{fontWeight: '700', fontSize: 15.5}}>{cartItems[i]['itemName']}</Text>
-                                    <Text style={{fontWeight: '700', fontSize: 12, color: '#666'}}>{"$"+prices[i]+ " x "+cart[cartItems[i]['itemId']]}</Text>
+                                    <Text style={{fontWeight: '700', fontSize: 12, color: '#666'}}>{₹"+prices[i]+ " x "+cart[cartItems[i]['itemId']]}</Text>
                                 </View>
                                 <Text style={{fontWeight:'700', marginRight: 10}}>$ {prices[i]*cart[cartItems[i]['itemId']]}</Text>
                             </View>

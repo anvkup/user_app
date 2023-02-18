@@ -50,6 +50,7 @@ export default function Cart(props){
         getItems()
         console.log("CI", cartItems);
     }, [])
+    let total=0
 
     return(
         <ScrollView>
@@ -57,13 +58,15 @@ export default function Cart(props){
             
 
             {
+                
                 detailsLoaded ? Object.keys(cartItems).map((i)=>{
+                    total = total+(prices[cartItems[i]['itemId']]*props.cart[cartItems[i]['itemId']]);
                     console.log("I", cartItems[i]['itemImage']);
                     return <CartItem key={Math.floor(Math.random()*10000)} id={cartItems[i]['itemId']} img={cartItems[i]['itemImage']} cart={props.cart} a={a} seta={seta} setcart={props.setcart} title={cartItems[i]['itemName']} qty={props.cart[cartItems[i]['itemId']]} pricePerUnit={prices[cartItems[i]['itemId']]} />
                 }):''
             }
             {/* <CartItem img={'/home/tom/Desktop/Projects/user_app-1/assets/vegies/tomato.png'} title="Tomatoo" pricePerUnit={50} qty={2} /> */}
-            <View style={[styles.cartBottomText, {backgroundColor: '#fff', paddingBottom: 10}]}><Text style={styles.cartBottomText}>Sub Total</Text><Text style={styles.cartBottomText}>$ 190</Text></View>
+            <View style={[styles.cartBottomText, {backgroundColor: '#fff', paddingBottom: 10}]}><Text style={styles.cartBottomText}>Sub Total</Text><Text style={styles.cartBottomText}>$ {total}</Text></View>
             
             <Button status="primary" onPress={()=>{navigation.navigate("Current Order", {prices: prices, cartItems: cartItems, cart: props.cart, setcart: props.setcart})}} style={{width: '95%', alignSelf: 'center', marginVertical: 10, elevation: 2}} accessoryLeft={()=>{return <FontAwesome name="check-square-o" size={16} color={"#fff"} />}}>Checkout</Button>
         </ScrollView>
