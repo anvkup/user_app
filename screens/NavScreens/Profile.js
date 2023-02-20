@@ -48,7 +48,7 @@ export default function Profile({navigation, route}){
             <ScrollView style={{position: 'absolute', bottom: '15%', width: '100%'}}>
                 <Text style={styles.profileOptions} onPress={()=>{navigation.navigate('Orders')}}>Orders</Text>
                 <Text style={styles.profileOptions} onPress={()=>{navigation.navigate('Notifications')}}>Notifications</Text>
-                <Text style={styles.profileOptions} onPress={()=>{navigation.navigate('Settings')}}>Settings</Text>
+                {/* <Text style={styles.profileOptions} onPress={()=>{navigation.navigate('Settings')}}>Settings</Text> */}
                 <Text style={styles.profileOptions} onPress={()=>{navigation.navigate('CustomerSupport')}}>Customer Support & Chat</Text>
                 <Text style={styles.profileOptions} onPress={()=>{navigation.navigate('FAQ')}}>FAQ</Text>
             </ScrollView>

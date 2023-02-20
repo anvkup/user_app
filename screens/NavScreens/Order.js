@@ -122,7 +122,7 @@ export default function Order({navigation ,route}){
                                 <Image source={{uri: `http://20.193.147.19:80/api/getFile?uri=${itemDetails[i['itemId']]['itemImage']}`}} style={styles.image} />
                                 <View style={{flexGrow: 1}}>
                                     <Text style={{fontWeight: '700', fontSize: 15.5}}>{itemDetails[i['itemId']]['itemName']}</Text>
-                                    <Text style={{fontWeight: '700', fontSize: 12, color: '#666'}}>{₹"+prices[i['itemId']]+ " x "+i['quantity']}</Text>
+                                    <Text style={{fontWeight: '700', fontSize: 12, color: '#666'}}>{"₹"+prices[i['itemId']]+ " x "+i['quantity']}</Text>
                                 </View>
                                 <Text style={{fontWeight:'700', marginRight: 10}}>$ {prices[i['itemId']]*i['quantity']}</Text>
                             </View>

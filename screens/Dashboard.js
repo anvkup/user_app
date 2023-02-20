@@ -38,7 +38,7 @@ export default function Dashboard(props, {navigation, route}){
                     headerShown: true, 
                     
                 }} />
-            <BottomBar.Screen name="Baskets" component={Basket} options={{tabBarLabel: 'Basket', tabBarIcon: ({focused, color})=>{return <FontAwesome5 style={{fontSize: 22, color: focused ? '#3D8361':'#000'}} name="shopping-basket" />}, headerShown: true}} />
+            <BottomBar.Screen name="Baskets" children={()=>{return <Basket setcart={props.setcart} />}} options={{tabBarLabel: 'Basket', tabBarIcon: ({focused, color})=>{return <FontAwesome5 style={{fontSize: 22, color: focused ? '#3D8361':'#000'}} name="shopping-basket" />}, headerShown: true}} />
             <BottomBar.Screen name="Shopping Cart" component={()=>{return <Cart cart={props.cart} setcart={props.setcart} />}} options={{tabBarLabel: 'Cart', tabBarIcon: ({focused, color})=>{return <AntDesign style={{fontSize: 22, color: focused ? '#3D8361':'#000'}} name="shoppingcart" />}, headerShown: true}} />
             <BottomBar.Screen name="Profile" component={Profile} options={{tabBarLabel: 'Profile', tabBarIcon: ({focused, color})=>{return <Ionicons style={{fontSize: 22, color: focused ? '#3D8361':'#000'}} name="person-circle" />}, headerShown: true, headerRight: ()=>{return<FontAwesome5 name="user-edit" style={{fontSize: 22, color: '#000', marginRight: 15}} />}}} />
         </BottomBar.Navigator>

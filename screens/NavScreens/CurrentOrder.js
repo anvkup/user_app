@@ -84,7 +84,7 @@ export default (props) => {
                                 <Image source={{uri: `http://20.193.147.19:80/api/getFile?uri=${cartItems[i]['itemImage']}`}} style={styles.image} />
                                 <View style={{flexGrow: 1}}>
                                     <Text style={{fontWeight: '700', fontSize: 15.5}}>{cartItems[i]['itemName']}</Text>
-                                    <Text style={{fontWeight: '700', fontSize: 12, color: '#666'}}>{₹"+prices[i]+ " x "+cart[cartItems[i]['itemId']]}</Text>
+                                    <Text style={{fontWeight: '700', fontSize: 12, color: '#666'}}>{"₹"+prices[i]+ " x "+cart[cartItems[i]['itemId']]}</Text>
                                 </View>
                                 <Text style={{fontWeight:'700', marginRight: 10}}>$ {prices[i]*cart[cartItems[i]['itemId']]}</Text>
                             </View>

@@ -36,6 +36,7 @@ export default function Cart(props){
             // setitemsList(data)
             // console.log(itemsList);
             let newObj={}
+            console.log("cart", props.cart);
             await Promise.all(Object.keys(props.cart).map(async(i)=>{
                 const response2 = await fetch(`http://20.193.147.19:80/api/items/getItemDetails?itemId=${i}`)
                 const data2 = await response2.json()

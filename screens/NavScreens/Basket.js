@@ -1,11 +1,14 @@
 import { Fontisto, MaterialCommunityIcons, SimpleLineIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 import { Button, Card, Input, List, SelectItem, Text, Select, IndexPath } from "@ui-kitten/components";
 import { useState, useEffect } from "react";
 import { View, Image, StyleSheet, ScrollView, Alert, ToastAndroid } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Basket({navigator, route}){
+export default function Basket(props){
+    
+    const navigator = useNavigation()
 
     const [itemsList, setitemsList] = useState([])
     const [itemsDetails, setitemsDetails] = useState({})
@@ -13,7 +16,9 @@ export default function Basket({navigator, route}){
     const [baskets, setbaskets] = useState([])
 
     // const [props.cart, props.setCart] = useState({})
-    const [a, seta] = useState(1)
+    const [a, seta] = useState(false)
+    const [basketCreationList, setbasketCreationList] = useState({})
+    const [basketCreationTitle, setbasketCreationTitle] = useState("Random Basket")
 
     useEffect(() => {
         async function getItems() {
@@ -37,6 +42,7 @@ export default function Basket({navigator, route}){
             setitemsDetailsLoaded(true)
             // console.log("Item Details==>", itemsDetails)
             console.log("+++", itemsDetails)
+            console.log('=-=-=', itemsDetails);
             // console.log("Item Details2==>", itemsDetails)
             try {
                 AsyncStorage.getItem('token', async (err, result)=>{
@@ -50,7 +56,7 @@ export default function Basket({navigator, route}){
                         }
                     })
                     const dataBasket = await responseBasket.json()
-                    // setbaskets(dataBasket)
+                    setbaskets(dataBasket)
                     console.log(responseBasket);
                     console.log("BASKET", dataBasket);
                 console.log('Basket milestone 5');
@@ -61,6 +67,12 @@ export default function Basket({navigator, route}){
             }
         }
         getItems()
+
+        let obj = {}
+        Object.keys(itemsDetails).map((i)=>{
+            obj[i]=0
+        })
+        setbasketCreationList(obj)
     }, [])
 
     const [showBasketCreationBox, setshowBasketCreationBox] = useState(false)
@@ -69,30 +81,54 @@ export default function Basket({navigator, route}){
         // ToastAndroid.show('Creating Basket, huhh?', 1000)
     }
 
-    const [selectedItemsForBasket, setselectedItemsForBasket] = useState([{1: new IndexPath(2)}, {2: new IndexPath(0)}])
+    const [selectedItemsForBasket, setselectedItemsForBasket] = useState([{1: 1}, {2: 2}])
 
     let basketNum=0;
 
+    function addToCart(list){
+        let cartList = {}
+        list.map((item)=>{
+            cartList[item['itemId']]=item['quantity']
+        })
+        props.setcart(cartList)
+        navigator.navigate('Shopping Cart')
+    }
+
+    const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0))
+    function createBasket(){
+        const obj = {}
+        obj[basketCreationTitle]=basketCreationList
+        console.log("FINAL OBJ", obj);
+        AsyncStorage.getItem("token", async(err, data)=>{
+            if(err) throw err;
+            const response = await fetch('http://20.193.147.19:80/api/users/createBasket', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': data
+                },
+                body:{
+                    basket: obj
+                }
+            })
+        })
+    }
+
     return(
         <View>
-            <MaterialCommunityIcons name="basket-plus" onPress={createBasket} style={{fontSize: 28, color: 'white', padding: 16, zIndex: 8, position: 'absolute', bottom: 20, elevation: 5, right: 20, backgroundColor: '#1C6758', borderRadius: 30}} />
+            <MaterialCommunityIcons name="basket-plus" onPress={()=>{setshowBasketCreationBox(true)}} style={{fontSize: 28, color: 'white', padding: 16, zIndex: 8, position: 'absolute', bottom: 20, elevation: 5, right: 20, backgroundColor: '#1C6758', borderRadius: 30}} />
             {
-                showBasketCreationBox && <View style={{position: 'absolute', selfAlign: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 10, height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                showBasketCreationBox ? <View style={{position: 'absolute', selfAlign: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 10, height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                     <Card style={{backgroundColor: '#fff'}}>
                         <Text style={{fontWeight: '700', fontSize: 15, textAlign: 'center', marginBottom: 20, marginTop: 10}}>Add Items to a Basket</Text>
                         <View>
                             {
-                                selectedItemsForBasket.length!=0 && selectedItemsForBasket.map((i)=>{
-                                    return <View style={{ width: '100%' }}>
-                                        <Text>Item #</Text>
-                                        <Select selectedIndex={i[Object.keys(i)[0]]} onSelect={index => {const obj = {}; obj[Object.keys(i)[0]]=0; setselectedItemsForBasket([...selectedItemsForBasket, ...[obj]]); console.log(selectedItemsForBasket)}}>
-                                {
-                                    itemsDetailsLoaded && Object.keys(itemsDetails).map((i2)=>{
-                                        return <SelectItem title={itemsDetails[i2]['itemName']} />
-                                    })
-                                }
-                            </Select>
-                            <Select>
+                                Object.keys(basketCreationList).length!=0 && Object.keys(basketCreationList).map((i)=>{
+                                    return <View style={{ width: '100%', flexDirection: 'row' }}>
+                                
+                                <Text style={{marginHorizontal: 10}}>{itemsDetails[i]['itemName']}</Text>
+                            <Select style={{flexGrow: 1}} selectedIndex={new IndexPath(basketCreationList[i]-1)} placeholder='Quantity' onSelect={index => {let obj=basketCreationList; obj[i]=index.row; console.log(index.row); setbasketCreationList(obj); seta(!a); console.log("Updated basket Cr list", basketCreationList);}}>
+                                    <SelectItem title={0} />
                                     <SelectItem title={1} />
                                     <SelectItem title={2} />
                                     <SelectItem title={3} />
@@ -109,9 +145,9 @@ export default function Basket({navigator, route}){
                             
                             }
                         </View>
-                        <Button style={{marginVertical: 10, marginTop: 20, width: '100%' }}>Create Basket</Button>
+                        <Button style={{marginVertical: 10, marginTop: 20, width: '100%' }} onPress={createBasket}>Create Basket</Button>
                     </Card>
-                </View>
+                </View>:<Text>H</Text>
             }
         <ScrollView style={{minHeight: '100%'}}>
             
@@ -137,6 +173,7 @@ export default function Basket({navigator, route}){
                             </View>
                             })
                         }
+                        <Button onPress={()=>{addToCart(b[Object.keys(b)[0]])}} style={{marginVertical: 15}}><MaterialCommunityIcons name="cart-arrow-right" style={{color: 'white', fontSize: 20}} />  Add Directly to Cart</Button>
                     </Card>
                 }):<Card style={{height: '100%'}}>
                     <Text style={{color: '#a4a4a4', fontWeight: '700', fontSize: 14}}>No Baskets Added Yet! Either create one or Place Order to add Basket Automatically</Text>
