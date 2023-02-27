@@ -1,6 +1,6 @@
 import { ApplicationProvider } from '@ui-kitten/components';
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as eva from '@eva-design/eva';
 import {default as theme} from './theme.json'
@@ -24,7 +24,7 @@ export default function App() {
   return (
     <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
       {
-        loggedIn ? firstTimeUser ? <FirstTime setfirstTimeUser={setfirstTimeUser} />:<DashboardNavigator setfirstTimeUser={setfirstTimeUser} />:<Login setLoggedIn={setloggedIn} firstTimeUser={firstTimeUser} setfirstTimeUser={setfirstTimeUser} />
+        loggedIn ? firstTimeUser ? <FirstTime setfirstTimeUser={setfirstTimeUser} />:<DashboardNavigator setloggedIn={setloggedIn} setfirstTimeUser={setfirstTimeUser} />:<Login setLoggedIn={setloggedIn} firstTimeUser={firstTimeUser} setfirstTimeUser={setfirstTimeUser} />
       }
       {/* <DashboardNavigator /> */}
     </ApplicationProvider>

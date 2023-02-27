@@ -124,7 +124,7 @@ export default function Order({navigation ,route}){
                                     <Text style={{fontWeight: '700', fontSize: 15.5}}>{itemDetails[i['itemId']]['itemName']}</Text>
                                     <Text style={{fontWeight: '700', fontSize: 12, color: '#666'}}>{"₹"+prices[i['itemId']]+ " x "+i['quantity']}</Text>
                                 </View>
-                                <Text style={{fontWeight:'700', marginRight: 10}}>$ {prices[i['itemId']]*i['quantity']}</Text>
+                                <Text style={{fontWeight:'700', marginRight: 10}}>₹ {prices[i['itemId']]*i['quantity']}</Text>
                             </View>
                         )
                     })
@@ -132,19 +132,19 @@ export default function Order({navigation ,route}){
                 <Card>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 0, paddingTop: 0, padding: 5, marginTop: 5}}>
                     <Text style={{fontWeight: '700'}}>SubTotal :</Text>
-                    <Text style={{fontWeight: '700'}}>${total}</Text>
+                    <Text style={{fontWeight: '700'}}>₹{total}</Text>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 0, padding: 4}}>
                     <Text style={{fontWeight: '700'}}>Deilvery Charges :</Text>
-                    <Text style={{fontWeight: '700'}}>${40}</Text>
+                    <Text style={{fontWeight: '700'}}>₹{40}</Text>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 0, padding: 4}}>
                     <Text style={{fontWeight: '700'}}>Discount :</Text>
-                    <Text style={{fontWeight: '700'}}>${50}</Text>
+                    <Text style={{fontWeight: '700'}}>₹{50}</Text>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 0, paddingTop: 5, marginBottom: 5}}>
                     <Text style={{fontWeight: '700'}}>Amount to be Paid :</Text>
-                    <Text style={{fontWeight: '700'}}>${total-10}</Text>
+                    <Text style={{fontWeight: '700'}}>₹{total-10}</Text>
                 </View>
                 </Card>
                 <Card style={{paddingBottom: 12}}>

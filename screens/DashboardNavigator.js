@@ -10,7 +10,7 @@ import Order from "./NavScreens/Order";
 import Orders from "./NavScreens/Orders";
 import Settings from "./NavScreens/Settings";
 
-export default function DashboardNavigator(){
+export default function DashboardNavigator(props){
 
     const Stack = createNativeStackNavigator()
     const [cart, setcart] = useState({})
@@ -18,7 +18,7 @@ export default function DashboardNavigator(){
     return(
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Dashboard" children={()=>{return <Dashboard cart={cart} setcart={setcart} />}} options={{headerShown: false, headerTitle: "Surf Vegies"}} />
+                <Stack.Screen name="Dashboard" children={()=>{return <Dashboard cart={cart} setcart={setcart} setloggedIn={props.setloggedIn} />}} options={{headerShown: false, headerTitle: "Surf Vegies"}} />
                 <Stack.Screen name="Orders" component={Orders} options={{headerTitle: "Orders"}} />
                 <Stack.Screen name="Notifications" component={Notifications} options={{headerTitle: "Notifications"}} />
                 <Stack.Screen name="Settings" component={Settings} options={{headerTitle: "Settings"}} />

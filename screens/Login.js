@@ -42,7 +42,7 @@ export default function Login (props){
     return (
         <SafeAreaView style={{display: 'flex', position: 'relative', justifyContent: 'center', width: '100%', height: '100%', paddingHorizontal: 30}}>
             { otpSent && <AntDesign name="left" size={20} style={{position: 'absolute', top: 45, left: 20}} onPress={()=>{setotpSent(false)}} /> }
-            <Image source={require('../assets/logo.jpeg')} style={{width: 200, height: 200, top: 0, alignSelf: 'center', marginBottom: 75, marginTop: -75}} />
+            <Image source={require('../assets/cartoutLogo.png')} style={{width: 200, height: 200, top: 0, alignSelf: 'center', marginBottom: 75, marginTop: -75}} />
             {
                 otpSent ? 
                 <View>

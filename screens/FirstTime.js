@@ -42,7 +42,7 @@ export default (props) => {
             <Text style={{fontWeight: '700', fontSize: 14, paddingLeft: 25, paddingTop: 30}}>Email Address</Text>
             <Input style={{marginHorizontal: 15}} onChangeText={(text)=>{setemail(text)}} placeholder="Your Email ID (Optional)" />
             <Text style={{fontWeight: '700', fontSize: 14, paddingLeft: 25, paddingTop: 30}}>Default Address</Text>
-            <Input style={{marginHorizontal: 15}} onChangeText={(text)=>{setaddress(text)}} placeholder="Address" />
+            <Input style={{marginHorizontal: 15}} textContentType="fullStreetAddress" onChangeText={(text)=>{setaddress(text)}} placeholder="Address" />
             <Button style={{marginHorizontal: 50, marginTop: 40, marginBottom: 50}} onPress={onSubmit}>SUBMIT</Button>
         </SafeAreaView>
     )

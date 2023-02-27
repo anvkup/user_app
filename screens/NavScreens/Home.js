@@ -2,10 +2,11 @@ import { Button, Card, Text } from "@ui-kitten/components";
 import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ImageSlider } from "react-native-image-slider-banner";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { Image, RefreshControl, ScrollView, StyleSheet, View } from "react-native";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import Counter from "./components/Counter";
+import { ActivityIndicator } from "react-native";
 
 export default function Home(props, { navigation }) {
 
@@ -39,9 +40,38 @@ export default function Home(props, { navigation }) {
         getItems()
     }, [])
 
+    function onReload(){
+        async function getItems() {
+            const response = await fetch(`http://20.193.147.19:80/api/users/getItems`)
+            const data = await response.json()
+            // console.log(data);
+            setitemsList(data)
+            let newObj = {}
+            // console.log(itemsList);
+            await Promise.all(data.map(async (i) => {
+                const response2 = await fetch(`http://20.193.147.19:80/api/items/getItemDetails?itemId=${i['itemId']}`)
+                const data2 = await response2.json()
+                // console.log(data2);
+
+                newObj[data2['itemId']] = data2
+            }))
+            setitemsDetails(newObj)
+            setitemsDetailsLoaded(true)
+            // console.log("Item Details==>", itemsDetails)
+            console.log("+++", itemsDetails)
+            // console.log("Item Details2==>", itemsDetails)
+        }
+        getItems()
+    }
+
+    let refreshing=false
+
     return (
         // <SafeAreaView>
-        <ScrollView>
+        <View>
+            {refreshing ? <ActivityIndicator /> : null}
+
+        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={onReload} />}>
             <ImageSlider
                 caroselImageContainerStyle={{ marginTop: -50 }}
                 data={[
@@ -64,7 +94,7 @@ export default function Home(props, { navigation }) {
                             <Card style={styles.card} id={a} key={i['itemId']} status={i['quantity'] > 10 ? 'primary' : i['quantity'] == 0 ? 'danger' : 'warning'}>
                                 <Image source={{ uri: `http://20.193.147.19:80/api/getFile?uri=${itemsDetails[i['itemId']]['itemImage']}` }} style={styles.cardImage} />
                                 <Text style={styles.cardText}>{itemsDetails[i['itemId']]['itemName']}</Text>
-                                <Text style={styles.cardPrice}>$ {i['price']} per/kg</Text>
+                                <Text style={styles.cardPrice}>₹ {i['price']} per/kg</Text>
                                 <Text status={i['quantity'] > 10 ? 'primary' : i['quantity'] == 0 ? 'danger' : 'warning'} style={styles.inStock}>{i['quantity'] > 10 ? 'In Stock' : i['quantity'] == 0 ? 'Out Of Stock' : 'Few left in Stock'}</Text>
                                 {
                                     props.cart[i['itemId']] == null || props.cart[i['itemId']] == 0 ?
@@ -81,6 +111,7 @@ export default function Home(props, { navigation }) {
                 }
             </View>
         </ScrollView>
+        </View>
         // </SafeAreaView>
     )
 }

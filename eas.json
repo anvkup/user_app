@@ -12,11 +12,15 @@
     },
     "preview": {
       "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
       "ios": {
         "resourceClass": "m1-medium"
       }
     },
     "preview2":{
+      "distribution": "internal",
       "android":{
         "buildType": "apk"
       }

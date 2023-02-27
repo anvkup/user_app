@@ -4,10 +4,10 @@
     "slug": "vegies-user-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/cartoutLogo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/anim2.webp",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

@@ -30,7 +30,7 @@ export default function Orders({navigation}){
             <Text style={{fontWeight: '700', fontSize: 14, paddingVertical: 9, paddingLeft: 14}}>Current Order</Text>
             {
                 currentOrders.length != 0 ? currentOrders.map((i)=>{
-                    return <Card onPress={()=>{navigation.navigate('Order', {orderId: Object.keys(i)[0]})}}><Text>Order No.: #{Object.keys(i)[0]}</Text></Card>
+                    return <Card onPress={()=>{navigation.navigate('Order', {orderId: i})}}><Text>Order No.: #{i}</Text></Card>
                 }):<Card><Text style={{color: '#a4a4a4'}}>No Orders in Progress :(</Text></Card>
             } 
             <Text style={{fontWeight: '700', fontSize: 14, paddingVertical: 9, paddingLeft: 14}}>Past Orders</Text>
