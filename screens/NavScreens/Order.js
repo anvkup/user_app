@@ -124,6 +124,61 @@ export default function Order({navigation ,route}){
         getItems()
     })
     }, [])
+
+    function onReload(){
+        AsyncStorage.getItem('token', (err, result)=>{
+            async function getItems() {
+                const response = await fetch(`http://20.193.147.19:80/api/users/getOrder?orderId=${route.params.orderId}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: result
+                    }
+                })
+                const data = await response.json()
+                console.log("DATA=", data);
+                
+                const response2 = await fetch(`http://20.193.147.19:80/api/users/getItems`, {
+                    method: 'get',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        token: result
+                    }
+                })
+                const data2 = await response2.json()
+                console.log("DATA2==", data2);
+    
+                let obj2={}
+                await data2.map((i)=>{
+                    obj2[i['itemId']]=i['price']
+                    console.log(obj2);
+                    console.log('prices=', prices);
+                })
+                setprices(obj2)
+                console.log("PRICES==", prices);
+                
+                console.log('data2 map finished');
+                let obj3= {}
+                await Promise.all(data['items'].map(async(i)=>{
+                    console.log('i=', i);
+                    const response3 = await fetch(`http://20.193.147.19:80/api/items/getItemDetails?itemId=${i['itemId']}`)
+                    const data3 = await response3.json()
+                    console.log('data3=', data3);
+                
+                    obj3[i['itemId']]=data3
+                }))
+                setitemDetails(obj3)
+                console.log('ABCD');
+            console.log(itemDetails);
+            
+            console.log(data);
+
+            setorder(data)
+            setorderLoaded(true)
+                startTimer()
+        }
+        getItems()})
+    }
+
     let refreshing = false
 
     return (
