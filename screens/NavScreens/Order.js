@@ -20,6 +20,27 @@ export default function Order({navigation ,route}){
     const [order, setorder] = useState('')
     const [orderLoaded, setorderLoaded] = useState(false)
     const [userInfo, setuserInfo] = useState('')
+    const [timer, settimer] = useState('')
+
+    function startTimer(){
+        setInterval(() => {
+            const timeOrdered=new Date(order.timeOrdered)
+            const currentTime=new Date()
+            const hoursLeft = timeOrdered.getHours()+2-currentTime.getHours()
+            const minutesLeft = timeOrdered.getMinutes()-currentTime.getMinutes()
+            const secondsLeft = timeOrdered.getSeconds()-currentTime.getSeconds()
+
+            const distance = timeOrdered.getTime()+7200000-currentTime.getTime()
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            settimer (hours+":"+minutes+":"+seconds)
+            // return order['timeSlotSelected']
+        }, 1000)
+    }
     
     useEffect(() => {
         AsyncStorage.getItem('token', (err, result)=>{
@@ -70,6 +91,8 @@ export default function Order({navigation ,route}){
 
             setorder(data)
             setorderLoaded(true)
+                startTimer()
+            
             
             // const response = await fetch(`http://20.193.147.19:80/api/users/getItems`)
             // const data = await response.json()
@@ -135,7 +158,7 @@ export default function Order({navigation ,route}){
                     <Text style={{fontWeight: '700'}}>₹{total}</Text>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 0, padding: 4}}>
-                    <Text style={{fontWeight: '700'}}>Deilvery Charges :</Text>
+                    <Text style={{fontWeight: '700'}}>Delivery Charges :</Text>
                     <Text style={{fontWeight: '700'}}>₹{40}</Text>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 0, padding: 4}}>
@@ -148,6 +171,11 @@ export default function Order({navigation ,route}){
                 </View>
                 </Card>
                 <Card style={{paddingBottom: 12}}>
+                    {
+                        <Text style={{textAlign: 'right', fontSize: 12}}><Text style={{fontWeight: '700', fontSize: 12.5}}>Time Left: </Text>{timer}</Text>
+                        // #72= 15.54.36
+                        // 900000
+                    }
                     <Text style={{fontWeight: '700', fontSize: 14, marginBottom: 20, marginTop: 10}}>Order Status</Text>
                     <StepIndicator
                     currentPosition={order['status']}
@@ -162,7 +190,7 @@ export default function Order({navigation ,route}){
                     order['status']==0 &&
                 <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 20, marginBottom: 20}}>
                     <Button style={{marginHorizontal: 10, marginRight: 5, flexGrow: 1, elevation: 4}}><Ionicons name='md-call-sharp' style={{fontSize: 15, marginTop: 5}} />   Call Delivery Boy</Button>
-                    <Button status='danger' style={{marginHorizontal: 10, marginLeft: 5, flexGrow: 1}}>&#x2716;   Cancel Order</Button>
+                    <Button status='danger' disabled={((new Date().getTime())-(new Date(order.timeOrdered).getTime()))>=900000} style={{marginHorizontal: 10, marginLeft: 5, flexGrow: 1}}>&#x2716;   Cancel Order</Button>
                 </View>
                 }
         </ScrollView>:<View>

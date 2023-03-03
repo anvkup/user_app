@@ -23,7 +23,6 @@
     "expo-dev-client": "^2.0.1",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
-    "lottie-ios": "3.2.3",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
@@ -37,7 +36,8 @@
     "react-native-screens": "~3.18.0",
     "react-native-step-indicator": "^1.0.3",
     "react-native-svg": "13.4.0",
-    "react-native-web": "~0.18.9"
+    "react-native-web": "~0.18.9",
+    "lottie-react-native": "5.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

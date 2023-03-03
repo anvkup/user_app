@@ -1,8 +1,8 @@
 import { AntDesign, Feather } from "@expo/vector-icons"
 import { useState, useEffect } from "react"
 import { useNavigation, useRoute } from "@react-navigation/native"
-import { Button, Card, Text } from "@ui-kitten/components"
-import { View, Image, StyleSheet, Alert, ScrollView, ToastAndroid } from "react-native"
+import { Button, Card, CheckBox, Radio, RadioGroup, Text } from "@ui-kitten/components"
+import { View, Image, StyleSheet, Alert, ScrollView, ToastAndroid, ActivityIndicator, RefreshControl } from "react-native"
 import prompt from "react-native-prompt-android"
 import DialogContainer from "react-native-dialog/lib/Container"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -15,6 +15,7 @@ export default (props) => {
     const cart = route.params.cart
     const cartItems = route.params.cartItems
     const prices = route.params.prices
+    const [deliverySlot, setdeliverySlot] = useState()
 
     let total=0;
 
@@ -29,6 +30,7 @@ export default (props) => {
                 },
                 body:JSON.stringify({
                     cart: cart,
+                    deliverySlot: deliverySlot,
                     total: total
                 })
             })
@@ -67,8 +69,34 @@ export default (props) => {
         })
     })
 
+    function onLoad (){
+        AsyncStorage.getItem('token', async (err, result)=>{
+            if (err) throw err;
+            else{
+                const response = await fetch(`http://20.193.147.19:80/api/users/userDetails`, {
+                    method: 'get',
+                    headers: {
+                        token: result,
+                        'Content-Type':'application/json'
+                    }
+                })
+                const data = await response.json()
+                console.log("PData=", data);
+                setname(data.name)
+                setphone(data.phone)
+                setemail(data.email)
+                setdefaultAddress(data.defaultAddress)
+            }
+        })
+    }
+    let refreshing = false
+
+
     return (
-        <ScrollView>
+        <View style={{height: '100%'}}>
+            {refreshing ? <ActivityIndicator /> : null}
+
+        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={onLoad} />}>
             <View style={{padding: 15, paddingHorizontal: 20, backgroundColor: 'white', borderBottomWidth: 0.8, borderBottomColor: '#777'}}>
             <Text style={{fontWeight: '700', fontSize: 16}}>{name}</Text>
             <Text style={{fontSize: 12, fontWeight: '700'}}>Phone: +91 {phone}</Text>
@@ -109,8 +137,44 @@ export default (props) => {
                     <Text style={{fontWeight: '700'}}>Amount to be Paid :</Text>
                     <Text style={{fontWeight: '700'}}>₹{total-10}</Text>
                 </View>
+
+                <RadioGroup style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}} selectedIndex={deliverySlot} onChange={index=>{setdeliverySlot(index)}}>
+      {/* <View style={{borderRadius: 4,margin: 2, padding: 6, backgroundColor: '#3366FF'}}> */}
+        <Radio
+          style={{margin: 2, backgroundColor: '#3D8361', padding: 10, margin: 4, borderRadius: 4, flexGrow: 1}}
+          status='control'
+          disabled={new Date().getHours()>=12}>
+          {new Date().getHours()>=12||new Date().getHours()<9 ? '09:00':(new Date().getHours())+":"+(new Date().getMinutes())}-12:00 AM
+        </Radio>
+      {/* </View> */}
+      {/* <View style={{borderRadius: 4,margin: 2, padding: 6, backgroundColor: '#3366FF'}}> */}
+        <Radio
+          style={{margin: 2, backgroundColor: '#3D8361', padding: 10, margin: 4, borderRadius: 4, flexGrow: 1}}
+          status='control'
+          disabled={new Date().getHours()>=15}>
+          {new Date().getHours()>=15||new Date().getHours()<12 ? '12:00':(new Date().getHours())+":"+(new Date().getMinutes())}-3:00 PM
+        </Radio>
+      {/* </View> */}
+      {/* <View style={{borderRadius: 4,margin: 2, padding: 6, backgroundColor: '#3366FF'}}> */}
+        <Radio
+          style={{margin: 2, backgroundColor: '#3D8361', padding: 10, margin: 4, borderRadius: 4, flexGrow: 1}}
+          status='control'
+          disabled={new Date().getHours()>=18}>
+          {new Date().getHours()>=18||new Date().getHours()<15 ? '15:00':(new Date().getHours())+":"+(new Date().getMinutes())}-6:00 PM
+        </Radio>
+      {/* </View> */}
+      {/* <View style={{borderRadius: 4,margin: 2, padding: 6, backgroundColor: '#3366FF'}}> */}
+        <Radio
+          style={{margin: 2, backgroundColor: '#3D8361', padding: 10, margin: 4, borderRadius: 4, flexGrow: 1}}
+          status='control'
+          disabled={new Date().getHours()>=21}>
+          {new Date().getHours()>=21||new Date().getHours()<18 ? '18:00':(new Date().getHours())+":"+(new Date().getMinutes())}-9:00 PM
+        </Radio>
+              {/* </View> */}
+      </RadioGroup>
                 <Button style={{marginHorizontal: 15, marginTop: 15, marginBottom: 15, elevation: 2}} onPress={placeOrder}>Place Order (COD)</Button>
         </ScrollView>
+</View>
     )
 }
 

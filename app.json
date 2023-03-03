@@ -7,8 +7,6 @@
     "icon": "./assets/cartoutLogo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/anim2.webp",
-      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
