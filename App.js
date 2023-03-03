@@ -39,7 +39,7 @@ export default function App() {
           resizeMode='contain'
           onAnimationFinish={() => {
             console.log('animation finished')
-            // setLoaded(true);
+            setLoaded(true);
         }}
         />
       </SafeAreaView>
