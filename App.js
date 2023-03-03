@@ -33,7 +33,7 @@ export default function App() {
   if (loaded == false) {
     return(
       <SafeAreaView style={styles.splash}>
-        <LottieView source={require('./assets/loading.mp4')}
+        <LottieView source={require('./assets/loadingJson.json')}
           autoPlay={true}
           loop={false}
           resizeMode='contain'

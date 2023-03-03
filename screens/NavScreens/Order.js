@@ -1,4 +1,4 @@
-import { View, Image, ScrollView } from "react-native";
+import { View, Image, ScrollView, RefreshControl } from "react-native";
 import { Entypo, Feather, FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Text, Card, Button } from "@ui-kitten/components";
@@ -6,6 +6,7 @@ import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import StepIndicator from "react-native-step-indicator";
 import { StepIndicatorProps } from "react-native-step-indicator";
+import { ActivityIndicator } from "react-native";
 
 export default function Order({navigation ,route}){
     
@@ -123,10 +124,13 @@ export default function Order({navigation ,route}){
         getItems()
     })
     }, [])
+    let refreshing = false
 
     return (
         orderLoaded ? 
-        <ScrollView style={{height: '100%'}}>
+        <View>
+            {refreshing ? <ActivityIndicator /> : null}
+        <ScrollView style={{height: '100%'}} refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={onReload} style={{}} />}>
             {/* <ScrollView> */}
             <View style={{padding: 15, paddingHorizontal: 20, backgroundColor: 'white', borderBottomWidth: 0.8, borderBottomColor: '#777'}}>
             <Text style={{fontWeight: '700', fontSize: 16}}>{order['orderedByName']}</Text>
@@ -141,7 +145,7 @@ export default function Order({navigation ,route}){
                 order['items'] && order['items'].map((i)=>{
                     total = total+(prices[i['itemId']]*i['quantity'])
                     return(
-                            <View style={styles.cartItem}>
+                        <View style={styles.cartItem}>
                                 <Image source={{uri: `http://20.193.147.19:80/api/getFile?uri=${itemDetails[i['itemId']]['itemImage']}`}} style={styles.image} />
                                 <View style={{flexGrow: 1}}>
                                     <Text style={{fontWeight: '700', fontSize: 15.5}}>{itemDetails[i['itemId']]['itemName']}</Text>
@@ -188,12 +192,13 @@ export default function Order({navigation ,route}){
                 {/* </ScrollView> */}
                 {
                     order['status']==0 &&
-                <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 20, marginBottom: 20}}>
+                    <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 20, marginBottom: 20}}>
                     <Button style={{marginHorizontal: 10, marginRight: 5, flexGrow: 1, elevation: 4}}><Ionicons name='md-call-sharp' style={{fontSize: 15, marginTop: 5}} />   Call Delivery Boy</Button>
                     <Button status='danger' disabled={((new Date().getTime())-(new Date(order.timeOrdered).getTime()))>=900000} style={{marginHorizontal: 10, marginLeft: 5, flexGrow: 1}}>&#x2716;   Cancel Order</Button>
                 </View>
                 }
-        </ScrollView>:<View>
+                </ScrollView>
+    </View>:<View>
             <Text>Orders not Loaded yet :(</Text>
         </View>
     )
