@@ -20,19 +20,19 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/cartoutLogo.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.vishal1230.vegiesuserapp"
+      "package": "com.anvkup.vegiesuserapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "owner": "vishal-1230",
     "extra": {
       "eas": {
-        "projectId": "266750fa-3731-4231-8a48-cd7beaed5126"
+        "projectId": "66ed1ff8-0a73-4ddd-b517-530ce65029ab"
       }
-    },
-    "owner": "vishal-1230"
+    }
   }
 }
