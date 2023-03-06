@@ -81,17 +81,19 @@ export default function Cart(props){
             console.log(newObj)
             setcartItems(newObj)
             setdetailsLoaded(true)
+            setrefreshing(false)
         }
         getItems()
         console.log("CI", cartItems);
     }
 
     let total=0
-    let refreshing = false
+    // let refreshing = false
+    const [refreshing, setrefreshing] = useState(false)
     return(
         <View style={{height: '100%'}}>
-            {refreshing ? <ActivityIndicator /> : null}
-        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={onReload} />}>
+            {/* {refreshing ? <ActivityIndicator /> : null} */}
+        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={()=>{setrefreshing(true); onReload()}} />}>
             <Text id={a+90} style={{margin: 9, fontWeight: '700', fontSize: 14, marginLeft: 12}}>Cart Items List</Text>
             
 

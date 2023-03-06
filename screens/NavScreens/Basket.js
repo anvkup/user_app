@@ -107,9 +107,9 @@ export default function Basket(props){
                     'Content-Type': 'application/json',
                     'token': data
                 },
-                body:{
+                body:JSON.stringify({
                     basket: obj
-                }
+                })
             })
         })
     }
@@ -147,7 +147,7 @@ export default function Basket(props){
                         </View>
                         <Button style={{marginVertical: 10, marginTop: 20, width: '100%' }} onPress={createBasket}>Create Basket</Button>
                     </Card>
-                </View>:<Text>H</Text>
+                </View>:<Text></Text>
             }
         <ScrollView style={{minHeight: '100%'}}>
             

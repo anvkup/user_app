@@ -38,7 +38,7 @@ export default function Profile(props){
             }
         })
     })
-    let refreshing = false
+    const [refreshing, setrefreshing] = useState(false)
 
     function onReload(){
         AsyncStorage.getItem('token', async (err, result)=>{
@@ -57,14 +57,15 @@ export default function Profile(props){
                 setphone(data.phone)
                 setemail(data.email)
                 setdefaultAddress(data.defaultAddress)
+                setrefreshing(false)
             }
         })
     }
 
     return(
         <View style={{height: '100%', width: '100%'}}>
-            {refreshing ? <ActivityIndicator /> : null}
-            <ScrollView refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={onReload} style={{}} />}>
+            {/* {refreshing ? <ActivityIndicator /> : null} */}
+            <ScrollView refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={()=>{setrefreshing(true); onReload()}} style={{}} />}>
 
             <View style={{display: 'flex', maxWidth: '100%', flexDirection: 'column', top: 50, alignItems: 'center', paddingHorizontal: 10, alignItems: 'center'}}>
                 <Ionicons name="person-sharp" style={{color: '#000',fontSize: 60, borderRadius: 50, marginHorizontal: 8, marginBottom: 8}} />

@@ -92,34 +92,7 @@ export default function Order({navigation ,route}){
 
             setorder(data)
             setorderLoaded(true)
-                startTimer()
-            
-            
-            // const response = await fetch(`http://20.193.147.19:80/api/users/getItems`)
-            // const data = await response.json()
-
-            // let obj={}
-            // data.map((i)=>{
-            //     obj[i['itemId']]=i['price']
-            //     // setprices({...prices, obj})
-            //     console.log("new prices=>", prices)
-            // })
-            // setprices(obj)
-
-            // // console.log(data);
-            // // setitemsList(data)
-            // // console.log(itemsList);
-            // let newObj={}
-            // await Promise.all(Object.keys(props.cart).map(async(i)=>{
-            //     const response2 = await fetch(`http://20.193.147.19:80/api/items/getItemDetails?itemId=${i}`)
-            //     const data2 = await response2.json()
-            //     // console.log(data2);
-
-            //     newObj[i]=data2
-            // }))
-            // console.log(newObj)
-            // setcartItems(newObj)
-            // setdetailsLoaded(tru
+            startTimer()
         }
         getItems()
     })
@@ -174,18 +147,18 @@ export default function Order({navigation ,route}){
 
             setorder(data)
             setorderLoaded(true)
-                startTimer()
+            startTimer()
+            setrefreshing(false)
         }
         getItems()})
     }
 
-    let refreshing = false
-
+    const [refreshing, setrefreshing] = useState(false)
     return (
         orderLoaded ? 
         <View>
-            {refreshing ? <ActivityIndicator /> : null}
-        <ScrollView style={{height: '100%'}} refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={onReload} style={{}} />}>
+            {/* {refreshing ? <ActivityIndicator /> : null} */}
+        <ScrollView style={{height: '100%'}} refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={()=>{setrefreshing(true); onReload()}} style={{}} />}>
             {/* <ScrollView> */}
             <View style={{padding: 15, paddingHorizontal: 20, backgroundColor: 'white', borderBottomWidth: 0.8, borderBottomColor: '#777'}}>
             <Text style={{fontWeight: '700', fontSize: 16}}>{order['orderedByName']}</Text>

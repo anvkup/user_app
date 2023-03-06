@@ -60,18 +60,20 @@ export default function Home(props, { navigation }) {
             // console.log("Item Details==>", itemsDetails)
             console.log("+++", itemsDetails)
             // console.log("Item Details2==>", itemsDetails)
+            setrefreshing(false)
         }
         getItems()
     }
 
-    let refreshing=false
+    // let refreshing=false
+    const [refreshing, setrefreshing] = useState(false)
 
     return (
         // <SafeAreaView>
         <View>
-            {refreshing ? <ActivityIndicator /> : null}
+            {/* {refreshing ? <ActivityIndicator /> : null} */}
 
-        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={onReload} />}>
+        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={()=>{setrefreshing(true); onReload()}} />}>
             <ImageSlider
                 caroselImageContainerStyle={{ marginTop: -50 }}
                 data={[
@@ -90,8 +92,10 @@ export default function Home(props, { navigation }) {
                     itemsDetailsLoaded ? itemsList.map((i) => {
                         console.log(props.cart);
                         console.log('========================================');
-                        return (
-                            <Card style={styles.card} id={a} key={i['itemId']} status={i['quantity'] > 10 ? 'primary' : i['quantity'] == 0 ? 'danger' : 'warning'}>
+                        if (props.filteredArray.length==0){
+
+                            return (
+                                <Card style={styles.card} id={a} key={i['itemId']} status={i['quantity'] > 10 ? 'primary' : i['quantity'] == 0 ? 'danger' : 'warning'}>
                                 <Image source={{ uri: `http://20.193.147.19:80/api/getFile?uri=${itemsDetails[i['itemId']]['itemImage']}` }} style={styles.cardImage} />
                                 <Text style={styles.cardText}>{itemsDetails[i['itemId']]['itemName']}</Text>
                                 <Text style={styles.cardPrice}>₹ {i['price']} per/kg</Text>
@@ -100,13 +104,34 @@ export default function Home(props, { navigation }) {
                                     props.cart[i['itemId']] == null || props.cart[i['itemId']] == 0 ?
                                         <Button appearance="outline" disabled={i['quantity'] != 0 ? false : true} style={styles.addBtn} onPress={() => { let obj = props.cart; seta(i['itemId'] * 100); obj[i['itemId']] = 1; console.log("OBJ==", obj); props.setCart(obj); console.log("New Cart=", props.cart); }} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: i['quantity'] != 0 ? "#1C6758" : '#ccc' }} />) }} >Add to Cart</Button> :
                                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderColor: "#1C6758", borderWidth: 2, borderRadius: 5, backgroundColor: "#1C6758", marginTop: 6 }}>
-                                            <Entypo name="minus" size={14} style={{ alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#1C6758', color: "#fff", backgroundColor: "#1C6758" }} onPress={() => { let obj = props.cart; seta(Math.floor(Math.random() * 1000) + i['itemId']); console.log("OBJ@++", obj); obj[i['itemId']] = props.cart[i['itemId']] - 1; console.log(obj); props.setCart(obj) }} />
-                                            <Text style={{ fontSize: 14, fontWeight: '700', borderLeftColor: "#1C6758", borderRightColor: '#1C6758', backgroundColor: "#fff", paddingVertical: 6, alignSelf: 'center', borderTopWidth: 0, borderBottomWidth: 0, paddingHorizontal: 14, paddingLeft: 18, borderWidth: 2 }}>{props.cart[i['itemId']]}</Text>
-                                            <Entypo name="plus" size={14} style={{ alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#1C6758', color: "#fff", backgroundColor: "#1C6758" }} onPress={() => { let obj = props.cart; seta(Math.floor(Math.random() * 1000) + i['itemId']); obj[i['itemId']] = props.cart[i['itemId']] + 1; props.setCart(obj) }} />
+                                        <Entypo name="minus" size={14} style={{ alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#1C6758', color: "#fff", backgroundColor: "#1C6758" }} onPress={() => { let obj = props.cart; seta(Math.floor(Math.random() * 1000) + i['itemId']); console.log("OBJ@++", obj); obj[i['itemId']] = props.cart[i['itemId']] - 1; console.log(obj); props.setCart(obj) }} />
+                                        <Text style={{ fontSize: 14, fontWeight: '700', borderLeftColor: "#1C6758", borderRightColor: '#1C6758', backgroundColor: "#fff", paddingVertical: 6, alignSelf: 'center', borderTopWidth: 0, borderBottomWidth: 0, paddingHorizontal: 14, paddingLeft: 18, borderWidth: 2 }}>{props.cart[i['itemId']]}</Text>
+                                        <Entypo name="plus" size={14} style={{ alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#1C6758', color: "#fff", backgroundColor: "#1C6758" }} onPress={() => { let obj = props.cart; seta(Math.floor(Math.random() * 1000) + i['itemId']); obj[i['itemId']] = props.cart[i['itemId']] + 1; props.setCart(obj) }} />
                                         </View>
+                                    }
+                                    </Card>
+                                    )
+                                }else{
+                                    if (props.filteredArray.includes(i['itemId'])){
+                                        return (
+                                            <Card style={styles.card} id={a} key={i['itemId']} status={i['quantity'] > 10 ? 'primary' : i['quantity'] == 0 ? 'danger' : 'warning'}>
+                                <Image source={{ uri: `http://20.193.147.19:80/api/getFile?uri=${itemsDetails[i['itemId']]['itemImage']}` }} style={styles.cardImage} />
+                                <Text style={styles.cardText}>{itemsDetails[i['itemId']]['itemName']}</Text>
+                                <Text style={styles.cardPrice}>₹ {i['price']} per/kg</Text>
+                                <Text status={i['quantity'] > 10 ? 'primary' : i['quantity'] == 0 ? 'danger' : 'warning'} style={styles.inStock}>{i['quantity'] > 10 ? 'In Stock' : i['quantity'] == 0 ? 'Out Of Stock' : 'Few left in Stock'}</Text>
+                                {
+                                    props.cart[i['itemId']] == null || props.cart[i['itemId']] == 0 ?
+                                        <Button appearance="outline" disabled={i['quantity'] != 0 ? false : true} style={styles.addBtn} onPress={() => { let obj = props.cart; seta(i['itemId'] * 100); obj[i['itemId']] = 1; console.log("OBJ==", obj); props.setCart(obj); console.log("New Cart=", props.cart); }} accessoryLeft={() => { return (<Entypo name="plus" style={{ fontSize: 20, color: i['quantity'] != 0 ? "#1C6758" : '#ccc' }} />) }} >Add to Cart</Button> :
+                                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderColor: "#1C6758", borderWidth: 2, borderRadius: 5, backgroundColor: "#1C6758", marginTop: 6 }}>
+                                        <Entypo name="minus" size={14} style={{ alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#1C6758', color: "#fff", backgroundColor: "#1C6758" }} onPress={() => { let obj = props.cart; seta(Math.floor(Math.random() * 1000) + i['itemId']); console.log("OBJ@++", obj); obj[i['itemId']] = props.cart[i['itemId']] - 1; console.log(obj); props.setCart(obj) }} />
+                                        <Text style={{ fontSize: 14, fontWeight: '700', borderLeftColor: "#1C6758", borderRightColor: '#1C6758', backgroundColor: "#fff", paddingVertical: 6, alignSelf: 'center', borderTopWidth: 0, borderBottomWidth: 0, paddingHorizontal: 14, paddingLeft: 18, borderWidth: 2 }}>{props.cart[i['itemId']]}</Text>
+                                        <Entypo name="plus" size={14} style={{ alignSelf: 'center', paddingHorizontal: 9, paddingVertical: 8, borderColor: '#1C6758', color: "#fff", backgroundColor: "#1C6758" }} onPress={() => { let obj = props.cart; seta(Math.floor(Math.random() * 1000) + i['itemId']); obj[i['itemId']] = props.cart[i['itemId']] + 1; props.setCart(obj) }} />
+                                        </View>
+                                    }
+                                    </Card>
+                                        )
+                                    }
                                 }
-                            </Card>
-                        )
                     }) : ''
                 }
             </View>

@@ -86,17 +86,18 @@ export default (props) => {
                 setphone(data.phone)
                 setemail(data.email)
                 setdefaultAddress(data.defaultAddress)
+                setrefreshing(false)
             }
         })
     }
-    let refreshing = false
-
+    // let refreshing = false
+    const [refreshing, setrefreshing] = useState(false)
 
     return (
         <View style={{height: '100%'}}>
-            {refreshing ? <ActivityIndicator /> : null}
+            {/* {refreshing ? <ActivityIndicator /> : null} */}
 
-        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={onLoad} />}>
+        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} colors={["#1C6758"]} onRefresh={()=>{setrefreshing(true); onLoad()}} />}>
             <View style={{padding: 15, paddingHorizontal: 20, backgroundColor: 'white', borderBottomWidth: 0.8, borderBottomColor: '#777'}}>
             <Text style={{fontWeight: '700', fontSize: 16}}>{name}</Text>
             <Text style={{fontSize: 12, fontWeight: '700'}}>Phone: +91 {phone}</Text>

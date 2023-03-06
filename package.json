@@ -18,11 +18,12 @@
     "@ui-kitten/components": "^5.1.2",
     "@ui-kitten/eva-icons": "^5.1.2",
     "axios": "^1.2.3",
-    "eas-cli": "^3.4.1",
+    "eas-cli": "^3.7.2",
     "expo": "~47.0.12",
-    "expo-dev-client": "^2.0.1",
+    "expo-dev-client": "~2.0.1",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
+    "lottie-react-native": "5.1.4",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
@@ -37,7 +38,7 @@
     "react-native-step-indicator": "^1.0.3",
     "react-native-svg": "13.4.0",
     "react-native-web": "~0.18.9",
-    "lottie-react-native": "5.1.4"
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

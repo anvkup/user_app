@@ -40,7 +40,7 @@ export default function App() {
           onAnimationFinish={() => {
             console.log('animation finished')
             setLoaded(true);
-        }}
+          }}
         />
       </SafeAreaView>
     )
