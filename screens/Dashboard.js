@@ -9,7 +9,7 @@ import Profile from "./NavScreens/Profile"
 import { Input } from "@ui-kitten/components"
 import { SafeAreaView } from "react-native-safe-area-context"
 
-export default function Dashboard(props, {navigation, route}){
+export default function Dashboard(props, { navigation, route }) {
 
     const BottomBar = createBottomTabNavigator()
     const [searchQuery, setsearchQuery] = useState('')
